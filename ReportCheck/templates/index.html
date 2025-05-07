@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Medical Report</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      background: #FFF;
+      border: 2px solid #000;
+      border-radius: 4px;
+      padding: 20px;
+      width: 90%;
+      max-width: 480px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      color: #000;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #000;
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #000;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      background: #FFF;
+      color: #000;
+    }
+    .buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+    button {
+      flex: 1;
+      padding: 10px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button.upload {
+      background: #000;
+      color: #FFF;
+    }
+    button.clear {
+      background: #FFF;
+      color: #000;
+      border: 2px solid #000;
+    }
+    .result {
+      margin-top: 1rem;
+      padding: 10px;
+      color: #000;
+      border: 1px solid #000;
+      border-radius: 4px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Upload Medical Report</h1>
+    <form id="uploadForm" action="/diagnostics/upload" method="post" enctype="multipart/form-data">
+      <label for="report">Select PDF, Image, or DICOM File:</label>
+      <input id="report" name="report" type="file" accept=".pdf,.jpeg,.jpg,.png,.dcm" required>
+      <div class="buttons">
+        <button class="upload" type="submit">Upload & Analyze</button>
+        <button class="clear" type="reset">Clear</button>
+      </div>
+    </form>
+    <!-- This is where the human-readable output will be displayed -->
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    // Intercept the form submission to process the response and display human-readable text.
+    document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+      e.preventDefault(); // prevent default form submission
+      const form = e.target;
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch(form.action, {
+          method: form.method,
+          body: formData
+        });
+        if (!res.ok) throw new Error('Network response was not ok');
+        const data = await res.json();
+
+        // Extract and display the human-readable report.
+        let outputText = "";
+        if (data && data.analysis && data.analysis.report) {
+          outputText = data.analysis.report.trim();
+        } else {
+          outputText = "No report available.";
+        }
+        document.getElementById('result').innerText = outputText;
+      } catch (error) {
+        document.getElementById('result').innerText = "Error: " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>
