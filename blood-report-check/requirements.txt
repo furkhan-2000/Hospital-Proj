@@ -1,0 +1,8 @@
+Flask
+flask-cors
+pillow
+pytesseract
+pdfplumber
+pydicom
+opencv-python-headless
+numpy
