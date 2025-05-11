@@ -211,9 +211,15 @@
     /* Footer */
     footer { background: var(--primary); color: #fff; padding: 2rem; text-align: center; }
     footer p { margin: .5rem 0; text-align: center; }
-    .social-icons { margin: 1rem 0; }
+    .footer-container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin: 1rem 0; }
+    .footer-logo img { max-height: 40px; margin-right: 1rem; }
+    .social-icons { flex: 1; text-align: center; }
     .social-icons a { color: #fff; font-size: 1.5rem; margin: 0 .5rem; transition: color 0.3s ease; }
     .social-icons a:hover { color: var(--primary-light); }
+    @media (max-width: 768px) { 
+      .footer-container { flex-direction: column; align-items: center; }
+      .footer-logo, .social-icons { margin: 0.5rem 0; }
+    }
   </style>
 </head>
 <body>
@@ -484,10 +490,15 @@
   <!-- Footer -->
   <footer id="footer">
     <p>Location: Al Riyadh Vantage Hospital, Al Rawabi, Riyadh 12271, KSA</p>
-    <div class="social-icons">
-      <a href="https://www.facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="https://www.instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="https://www.img2link.com/images/2025/05/11/925df1b49fc1713d0cbbc843e1032eab.png" alt="Al Riyadh Vantage Hospital Logo">
+      </div>
+      <div class="social-icons">
+        <a href="https://www.facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
     </div>
     <p>© 2025 Al-Riyadh Vantage Hospital. All Rights Reserved.</p>
     <p>Committed to Excellence in Patient-Centric Care | Aligned with Saudi Vision 2030</p>
