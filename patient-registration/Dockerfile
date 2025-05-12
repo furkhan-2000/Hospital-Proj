@@ -9,7 +9,6 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     FLASK_ENV=production \
     PYTHONPATH=/app \
     PATH="/home/appuser/.local/bin:${PATH}" \
-    DATABASE_URL=sqlite:////app/data/app.db \
     AUDIT_LOG_FILE=/app/logs/audit.log \
     PATIENT_DATA_DIR=/app/data/patient_data
 
