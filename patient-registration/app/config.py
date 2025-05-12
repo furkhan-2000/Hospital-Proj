@@ -1,55 +1,43 @@
-import os
 from pydantic_settings import BaseSettings
-from pydantic import Field
-from pathlib import Path
+import os
 
 class Settings(BaseSettings):
-    # Core mail settings
-    MAIL_SERVER: str = Field(..., env="MAIL_SERVER")
-    MAIL_PORT: int = Field(..., env="MAIL_PORT")
-    MAIL_USE_TLS: bool = Field(..., env="MAIL_USE_TLS")
-    MAIL_USE_SSL: bool = Field(..., env="MAIL_USE_SSL")
-    MAIL_USERNAME: str = Field(..., env="MAIL_USERNAME")
-    MAIL_PASSWORD: str = Field(..., env="MAIL_PASSWORD")
+    SQLALCHEMY_DATABASE_URI: str
+    SECRET_KEY: str
+    MAIL_SERVER: str
+    MAIL_PORT: int
+    MAIL_USE_TLS: bool
+    MAIL_USE_SSL: bool
+    MAIL_USERNAME: str
+    MAIL_PASSWORD: str
+    ADMIN_EMAIL: str
+    FLASK_LIMITER_STORAGE_URI: str = "memory://"
 
-    # Admin email for notifications
-    ADMIN_EMAIL: str = Field(..., env="ADMIN_EMAIL")
+class ProductionConfig:
+    """Base configuration for production environment."""
+    def __init__(self):
+        self.settings = Settings()
 
-    # Other app-specific settings
-    DATABASE_URL: str = Field(default="sqlite:////app/data/app.db", env="DATABASE_URL")
-    AUDIT_LOG_FILE: str = Field(default="/app/logs/audit.log", env="AUDIT_LOG_FILE")
-    PATIENT_DATA_DIR: str = Field(default="/app/data/patient_data", env="PATIENT_DATA_DIR")
-
-    class SettingsConfigDict:
-        # Automatically load .env from project root
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-
-class Config:
-    SECRET_KEY = os.environ.get("SECRET_KEY", "hard-to-guess-string")
+    # Flask configuration attributes
+    SECRET_KEY = property(lambda self: self.settings.SECRET_KEY or os.urandom(24))
+    SQLALCHEMY_DATABASE_URI = property(lambda self: self.settings.SQLALCHEMY_DATABASE_URI)
+    MAIL_SERVER = property(lambda self: self.settings.MAIL_SERVER)
+    MAIL_PORT = property(lambda self: self.settings.MAIL_PORT)
+    MAIL_USE_TLS = property(lambda self: self.settings.MAIL_USE_TLS)
+    MAIL_USE_SSL = property(lambda self: self.settings.MAIL_USE_SSL)
+    MAIL_USERNAME = property(lambda self: self.settings.MAIL_USERNAME)
+    MAIL_PASSWORD = property(lambda self: self.settings.MAIL_PASSWORD)
+    ADMIN_EMAIL = property(lambda self: self.settings.ADMIN_EMAIL)
+    FLASK_LIMITER_STORAGE_URI = property(lambda self: self.settings.FLASK_LIMITER_STORAGE_URI)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    PORT = 5003
-    CACHE_TYPE = "simple"
-    CACHE_DEFAULT_TIMEOUT = 300
-    SESSION_COOKIE_SECURE = True
-    REMEMBER_COOKIE_SECURE = True
-    SESSION_COOKIE_HTTPONLY = True
-    REMEMBER_COOKIE_HTTPONLY = True
-    AUDIT_LOG_FILE = os.environ.get("AUDIT_LOG_FILE", "/app/logs/audit.log")
-    PATIENT_DATA_DIR = os.environ.get("PATIENT_DATA_DIR", "/app/data/patient_data")
+    AUDIT_LOG_FILE = '/app/logs/audit.log'
 
-class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
-        "DATABASE_URL", Config.__dict__.get("DATABASE_URL")
-    )
-
-    @classmethod
-    def init_app(cls, app):
-        # Load environment via Pydantic and update app.config
+    @staticmethod
+    def init_app(app):
         settings = Settings()
-
-        # Update Flask app config from Pydantic settings
         app.config.update(
+            SECRET_KEY=settings.SECRET_KEY or os.urandom(24),
+            SQLALCHEMY_DATABASE_URI=settings.SQLALCHEMY_DATABASE_URI,
             MAIL_SERVER=settings.MAIL_SERVER,
             MAIL_PORT=settings.MAIL_PORT,
             MAIL_USE_TLS=settings.MAIL_USE_TLS,
@@ -57,11 +45,7 @@ class ProductionConfig(Config):
             MAIL_USERNAME=settings.MAIL_USERNAME,
             MAIL_PASSWORD=settings.MAIL_PASSWORD,
             ADMIN_EMAIL=settings.ADMIN_EMAIL,
-            SQLALCHEMY_DATABASE_URI=settings.DATABASE_URL,
-            AUDIT_LOG_FILE=settings.AUDIT_LOG_FILE,
-            PATIENT_DATA_DIR=settings.PATIENT_DATA_DIR
+            FLASK_LIMITER_STORAGE_URI=settings.FLASK_LIMITER_STORAGE_URI,
+            SQLALCHEMY_TRACK_MODIFICATIONS=False,
+            AUDIT_LOG_FILE='/app/logs/audit.log'
         )
-
-        # Ensure directories exist
-        Path(settings.PATIENT_DATA_DIR).mkdir(parents=True, exist_ok=True)
-        Path(os.path.dirname(settings.AUDIT_LOG_FILE)).mkdir(parents=True, exist_ok=True)
