@@ -5,15 +5,18 @@ from flask import Flask, render_template
 from flask_mail import Mail
 from flask_cors import CORS
 from flask_talisman import Talisman
+from flask_migrate import Migrate
 import structlog
 import os
 from sqlalchemy import text
-from sqlalchemy.exc import OperationalError
 
 from app.config import ProductionConfig
 from app.error_handlers import register_error_handlers
 from app.extensions import db, limiter, mail
+from app.core.models import Patient  # Ensure Patient model is registered
 
+# Initialize migrate
+migrate = Migrate()
 
 def create_app(config_class=ProductionConfig):
     # Initialize Flask
@@ -34,9 +37,21 @@ def create_app(config_class=ProductionConfig):
 
     # Initialize extensions
     db.init_app(app)
+    migrate.init_app(app, db)
     mail.init_app(app)
     CORS(app)
     limiter.init_app(app)
+
+    # Initialize database: create tables and verify connectivity
+    with app.app_context():
+        try:
+            db.create_all()
+            db.session.execute(text("SELECT 1"))
+            db.session.commit()
+            app.logger.info("Database initialized and verified")
+        except Exception as e:
+            app.logger.error("Failed to initialize database: %s", e)
+            raise
 
     # Security headers
     Talisman(
@@ -46,9 +61,11 @@ def create_app(config_class=ProductionConfig):
         session_cookie_secure=False,
         content_security_policy={
             'default-src': "'self'",
-            'script-src': "'self' 'unsafe-inline'",
-            'style-src': "'self' 'unsafe-inline'",
-            'img-src': "'self' data:"
+            'script-src': "'self' 'unsafe-inline' https://code.jquery.com",
+            'style-src': "'self' 'unsafe-inline' https://cdnjs.cloudflare.com",
+            'img-src': "'self' data:",
+            'media-src': "'self'",
+            'frame-src': "'self' https://www.google.com"
         }
     )
 
@@ -61,26 +78,8 @@ def create_app(config_class=ProductionConfig):
     @app.route('/<path:path>')
     def serve_ui(path):
         if path.startswith('api/'):
-            # Let API return its own 404/405
             return app.send_static_file('404.html'), 404
         return render_template('index.html')
-
-    # Ensure database tables exist (and enable WAL)
-    with app.app_context():
-        try:
-            db.create_all()
-            app.logger.info("DB tables created or verified successfully")
-        except OperationalError as e:
-            msg = str(e)
-            if "already exists" in msg:
-                app.logger.warning("Some tables already exist, skipping creation: %s", msg)
-            else:
-                app.logger.error("Database initialization failed: %s", msg)
-                raise
-        try:
-            db.session.execute(text("PRAGMA journal_mode=WAL"))
-        except Exception as e:
-            app.logger.error("Failed to enable WAL mode: %s", e)
 
     # Register error handlers
     register_error_handlers(app)
