@@ -1,51 +1,613 @@
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-}
-
-:root {
-    --primary-color: #2c3e50;
-    --secondary-color: #3498db;
-    --success-color: #2ecc71;
-    --error-color: #e74c3c;
-    --text-color: #333;
-    --light-bg: #f5f5f5;
-    --white: #ffffff;
-    --shadow: 0 2px 4px rgba(0,0,0,0.1);
-    --transition: all 0.3s ease;
 }
 
 body {
-    background-color: var(--light-bg);
-    color: var(--text-color);
+    font-family: Arial, sans-serif;
     line-height: 1.6;
+    color: #333;
+    background: #F4F4F4;
 }
 
+/* Variables */
+:root {
+    --primary: #007BFF;
+    --primary-light: #66BBFF;
+    --accent: #28a745;
+    --accent-dark: #218838;
+    --background: #F4F4F4;
+    --card-bg: #FFFFFF;
+    --text-color: #333333;
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
+}
+
+/* Container */
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 20px;
 }
 
-.header {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 1.5rem;
+/* Hero Section */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url('/static/assets/images/doctor.jpg') center/cover scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+}
+
+/* Updated Hero Container to Center Content */
+.hero .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    margin-bottom: 2rem;
-    border-radius: 8px;
-    box-shadow: var(--shadow);
+    position: relative;
+    top: 0;
 }
 
+.hero-content {
+    position: relative;
+    text-align: center;
+    color: #fff;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: .5rem;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+}
+
+.overlay-video {
+    width: 70vw;
+    max-width: 800px;
+    margin-top: 1rem;
+    border-radius: 8px;
+}
+
+/* Original logo and menu within hero (if any) */
+.logo h1 {
+    font-size: 24px;
+    color: #fff;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.primary-menu {
+    display: block;
+}
+
+.primary-menu ul {
+    list-style: none;
+    display: flex;
+}
+
+.primary-menu ul li {
+    margin-left: 20px;
+}
+
+.primary-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.primary-menu ul li a:hover {
+    color: var(--primary-light);
+}
+
+/* Compassionate Care */
+.compassion {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--card-bg);
+    padding: 4rem 2rem;
+    gap: 2rem;
+}
+
+.compassion .text {
+    flex: 1 1 40%;
+    padding-right: 2rem;
+}
+
+.compassion .text h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.compassion .text p {
+    line-height: 1.6;
+}
+
+.compassion .slider {
+    flex: 1 1 55%;
+    position: relative;
+    height: 350px;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: left .5s ease;
+}
+
+.slide.active {
+    left: 0;
+}
+
+.slide img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: .5rem;
+}
+
+.slide h3 {
+    color: var(--accent-dark);
+    margin-bottom: .5rem;
+}
+
+.slide p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.slider-nav {
+    text-align: center;
+    margin-top: .5rem;
+}
+
+.slider-nav button {
+    background: var(--accent);
+    border: none;
+    color: #fff;
+    margin: 0 .25rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.slider-nav button.active {
+    background: var(--accent-dark);
+}
+
+/* Our Specialists */
+.specialists {
+    background: var(--card-bg);
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.specialists h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary);
+}
+
+.specialist-slider {
+    position: relative;
+    min-height: 800px;
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.specialist-slide {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    min-height: 100%;
+    padding: 1rem;
+    background: var(--card-bg);
+    transition: left .5s ease;
+}
+
+.specialist-slide.active {
+    left: 0;
+}
+
+.specialist-slide .img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    margin-bottom: 1rem;
+}
+
+.specialist-slide .img-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.specialist-slide .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: url(#custom-shape);
+}
+
+.specialist-slide .img-container::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: #ff99cc;
+    clip-path: url(#custom-shape);
+    z-index: -1;
+}
+
+.specialist-slide h3 {
+    color: var(--accent-dark);
+    font-size: 1.5rem;
+    margin-bottom: .25rem;
+}
+
+.specialist-slide h4 {
+    color: var(--primary);
+    font-size: 1.3rem;
+    margin-bottom: .5rem;
+    font-weight: bold;
+}
+
+.specialist-slide p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Visual Tour */
+.visual-tour {
+    background: var(--card-bg);
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.visual-tour h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary);
+}
+
+.tour-slider {
+    position: relative;
+    height: 500px;
+    max-width: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.tour-slide {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    transition: left .5s ease;
+}
+
+.tour-slide.active {
+    left: 0;
+}
+
+.tour-slide .img-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.tour-slide .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: url(#amoeba-shape);
+}
+
+.tour-slide .img-container::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: #66BBFF;
+    clip-path: url(#amoeba-shape);
+    z-index: -1;
+}
+
+/* Report Analyzer */
+.report-analyzer {
+    background: var(--card-bg);
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.report-analyzer h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary);
+}
+
+.report-services {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.service-box {
+    width: 300px;
+    height: 300px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.service-box:hover {
+    transform: scale(1.05);
+}
+
+.service-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.service-box h3 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    margin: 0;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* Booking */
+.booking {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--card-bg);
+    padding: 4rem 2rem;
+    gap: 2rem;
+}
+
+.booking form {
+    flex: 1 1 50%;
+    padding-right: 2rem;
+}
+
+.booking form label {
+    display: block;
+    margin: .5rem 0 .2rem;
+}
+
+.booking form input,
+.booking form select,
+.booking form textarea {
+    width: 100%;
+    padding: .5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.booking form textarea {
+    height: 100px;
+    resize: vertical;
+    background: #fafafa;
+    color: #666;
+}
+
+.booking form button {
+    background: var(--primary);
+    color: #fff;
+    padding: .75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.booking .info {
+    flex: 1 1 40%;
+}
+
+.booking .info h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.hours p {
+    margin: .3rem 0;
+    font-size: 0.9rem;
+}
+
+.map iframe {
+    width: 100%;
+    height: 200px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: #fff;
+    z-index: 1000;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.toast.success {
+    background-color: var(--success-color);
+}
+
+.toast.error {
+    background-color: var(--error-color);
+}
+
+/* Footer */
+.footer {
+    background: var(--primary);
+    color: #fff;
+    padding: 2rem;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+
+.footer-logo img {
+    max-height: 40px;
+    margin-right: 1rem;
+}
+
+.social-icons {
+    flex: 1;
+    text-align: center;
+}
+
+.social-icons a {
+    font-size: 1.5rem;
+    margin: 0 .5rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: var(--primary-light);
+}
+
+.footer p {
+    margin: .5rem 0;
+    font-size: 14px;
+}
+
+/* Updated Footer Centering */
+/* This will center all footer text except the logo, which remains fixed on the left */
+#footer {
+    text-align: center;
+    position: relative;
+}
+#footer .footer-container {
+    justify-content: center;
+    position: relative;
+}
+#footer .footer-container .footer-logo {
+    position: absolute;
+    left: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .primary-menu {
+        display: none;
+        width: 100%;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        background: var(--primary);
+    }
+
+    .primary-menu.active {
+        display: block;
+    }
+
+    .primary-menu ul {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .primary-menu ul li {
+        margin: 10px 0;
+    }
+
+    .compassion .text {
+        flex: 1 1 100%;
+        padding-right: 0;
+    }
+
+    .compassion .slider {
+        flex: 1 1 100%;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-logo,
+    .social-icons {
+        margin: 0.5rem 0;
+    }
+}
+
+/* Form Styles from Your style.css */
 .form-container {
-    background-color: var(--white);
+    background: #FFFFFF;
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: var(--shadow);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-bottom: 2rem;
-    transition: var(--transition);
 }
 
 .form-group {
@@ -61,92 +623,65 @@ input, select {
 }
 
 .btn {
-    background-color: var(--secondary-color);
-    color: var(--white);
+    background: #3498db;
+    color: #fff;
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
+/* New CSS for Hamburger Menu & Sidebar Navigation */
+
+/* Header with Hamburger Menu (Top Center) */
+header {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
 }
-* {
-    margin: 0;
+
+/* Hamburger Button in Header */
+header .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Sidebar Navigation */
+.sidebar-menu {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Hidden by default */
+    width: 250px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    transition: left 0.3s ease-in-out;
+    padding-top: 60px;
+    z-index: 1000;
+}
+
+.sidebar-menu ul {
+    list-style: none;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
 }
 
-:root {
-    --primary-color: #2c3e50;
-    --secondary-color: #3498db;
-    --success-color: #2ecc71;
-    --error-color: #e74c3c;
-    --text-color: #333;
-    --light-bg: #f5f5f5;
-    --white: #ffffff;
-    --shadow: 0 2px 4px rgba(0,0,0,0.1);
-    --transition: all 0.3s ease;
+.sidebar-menu ul li {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-body {
-    background-color: var(--light-bg);
-    color: var(--text-color);
-    line-height: 1.6;
+.sidebar-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.header {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 1.5rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-}
-
-.form-container {
-    background-color: var(--white);
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-    margin-bottom: 2rem;
-    transition: var(--transition);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-input, select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 2px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.btn {
-    background-color: var(--secondary-color);
-    color: var(--white);
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
+.sidebar-menu.open {
+    left: 0;
 }
