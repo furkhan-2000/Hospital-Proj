@@ -5,6 +5,7 @@ from email_validator import validate_email as validate_email_address
 from bleach import clean
 
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import text                     # ← NEW IMPORT
 from app.extensions import db, limiter, mail
 from flask_mail import Message
 
@@ -18,7 +19,7 @@ logger = structlog.get_logger()
 def create_patient():
     try:
         data = request.get_json(force=True)
-        required = ["first_name", "last_name", "date_of_birth", "age", "sex", "email", "phone"]
+        required = ["first_name", "last_name", "date_of_birth", "sex", "email", "phone"]
         if not all(k in data for k in required):
             return jsonify({"error": "Missing required fields"}), 400
 
@@ -30,7 +31,6 @@ def create_patient():
             first_name    = clean(data["first_name"], strip=True),
             last_name     = clean(data["last_name"], strip=True),
             date_of_birth = datetime.strptime(data["date_of_birth"], "%Y-%m-%d").date(),
-            age           = int(data["age"]),
             sex           = data["sex"],
             email         = data["email"].lower().strip(),
             phone         = clean(data["phone"], strip=True),
@@ -44,16 +44,13 @@ def create_patient():
                     timestamp=datetime.utcnow().isoformat(),
                     patient_id=patient.id)
 
-        # --------------------------
         # Send styled HTML email
-        # --------------------------
         doctor_addr = current_app.config["ADMIN_EMAIL"]
         msg = Message(
             subject="New Patient Registration",
             sender=current_app.config["MAIL_USERNAME"],
             recipients=[doctor_addr]
         )
-        # Render our new HTML template
         msg.html = render_template("patient_email.html", patient=patient)
         mail.send(msg)
 
@@ -70,11 +67,11 @@ def create_patient():
         logger.error("Patient creation failed", error=str(e))
         return jsonify({"error": str(e)}), 400
 
-
 @bp.route("/health", methods=["GET"])
 def health():
     try:
-        db.session.execute("SELECT 1")
+        # Wrap the raw SQL in text(), otherwise SQLAlchemy 2.x rejects bare strings
+        db.session.execute(text("SELECT 1"))      # ← UPDATED LINE
         return jsonify({
             "status": "healthy",
             "database": "connected"
