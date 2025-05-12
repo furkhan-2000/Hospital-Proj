@@ -6,3 +6,4 @@ pdfplumber
 pydicom
 opencv-python-headless
 numpy
+pint
