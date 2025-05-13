@@ -6,6 +6,8 @@
     <title>Al Riyadh Vantage Hospital</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body>
     <!-- SVG Definition for Custom Shape -->
@@ -44,7 +46,7 @@
             <div class="hero-content">
                 <h1>Al Riyadh Vantage Hospital</h1>
                 <p>Where Precision Meets Compassion</p>
-                <video id="overlayVideo" class="overlay-video" autoplay muted loop poster="/static/assets/images/hero-poster.jpg" preload="auto">
+                <video id="overlayVideo" class="overlay-video" autoplay muted loop preload="auto">
                     <source src="/static/assets/videos/hero.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -53,7 +55,7 @@
     </section>
 
     <!-- Compassionate Care -->
-    <section id="compassion" class="compassion">
+    <section id="compassion" class="compassion" data-aos="fade-up" data-aos-delay="100">
         <div class="text">
             <h2>Compassionate Care</h2>
             <p>At Al Riyadh Vantage Hospital, we proudly stand at the intersection of cutting-edge medical innovation and unwavering dedication to patient-centered care. Our mission is to redefine healthcare excellence by delivering advanced diagnostic solutions tailored to your unique needs, supported by a seamless, stress-free experience.</p>
@@ -99,7 +101,7 @@
     </section>
 
     <!-- Our Specialists -->
-    <section id="specialists" class="specialists">
+    <section id="specialists" class="specialists" data-aos="fade-up" data-aos-delay="200">
         <h2>Our Specialists</h2>
         <div class="specialist-slider" id="specialistSlider">
             <div class="specialist-slide active">
@@ -157,7 +159,7 @@
     </section>
 
     <!-- Visual Tour -->
-    <section id="visual-tour" class="visual-tour">
+    <section id="visual-tour" class="visual-tour" data-aos="fade-up" data-aos-delay="300">
         <h2>Visual Tour</h2>
         <div class="tour-slider" id="tourSlider">
             <div class="tour-slide active">
@@ -199,7 +201,7 @@
     </section>
 
     <!-- Report Analyzer -->
-    <section id="report-analyzer" class="report-analyzer">
+    <section id="report-analyzer" class="report-analyzer" data-aos="fade-up" data-aos-delay="400">
         <h2>Report Analyzer</h2>
         <div class="report-services">
             <div class="service-box">
@@ -214,7 +216,7 @@
     </section>
 
     <!-- Consultation Booking -->
-    <section id="booking" class="booking">
+    <section id="booking" class="booking" data-aos="fade-up" data-aos-delay="500">
         <form id="patientForm">
             <label for="firstName">First Name</label>
             <input id="firstName" type="text" placeholder="First Name" required>
@@ -252,22 +254,40 @@
 
     <!-- Footer -->
     <footer id="footer">
-        <p>Location: Al Riyadh Vantage Hospital, Al Rawabi, Riyadh 12271, KSA</p>
-        <div class="footer-container">
+        <div class="footer-wrapper">
             <div class="footer-logo">
-                <img src="/static/assets/images/logo.png" alt="Al Riyadh Vantage Hospital Logo">
+                <!-- Hospital logo remains unchanged -->
+                <img src="/static/assets/images/new_logo.png" alt="Al Riyadh Vantage Hospital Logo">
             </div>
-            <div class="social-icons">
-                <a href="https://www.facebook.com/AlRiyadhVantage" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.twitter.com/AlRiyadhVantage" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/AlRiyadhVantage" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <div class="footer-content">
+                <p>Location: Al Riyadh Vantage Hospital, Al Rawabi, Riyadh 12271, KSA</p>
+                <div class="social-icons">
+                    </a>
+                    <a href="https://www.facebook.com/AlRiyadhVantage" target="_blank" aria-label="Facebook">
+                        <img src="/static/assets/images/social-facebook.png" alt="Facebook Icon">
+                    </a>
+
+                    <a href="https://www.twitter.com/AlRiyadhVantage" target="_blank" aria-label="Twitter">
+                        <img src="/static/assets/images/social-twitter.png" alt="Twitter Icon">
+                    </a>
+                    </a>
+                </div>
+                <p> © 2025 Al Riyadh Vantage Hospital. All Rights Reserved | Aligned with Saudi Vision 2030 <br>
+                    Designed, Developed & Engineered by Khan Mohammed </p>
             </div>
         </div>
-        <p> © 2025 Al Riyadh Vantage Hospital. All Rights Reserved | Aligned with Saudi Vision 2030 <br>
-                 Designed, Developed & Engineered by Khan Mohammed </p
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800, // Animation duration in milliseconds
+            once: true,    // Animations occur only once
+            offset: 100    // Trigger animations 100px before element is in view
+        });
+    </script>
 </body>
 </html>
