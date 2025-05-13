@@ -35,15 +35,15 @@ curl -o app/static/assets/images/urinsights.jpg https://img.freepik.com/free-pho
 curl -o app/static/assets/images/bloodinsights.jpg https://img.freepik.com/free-photo/coronavirus-blood-samples-arrangement-lab_23-2149107259.jpg
 
 # Footer
-curl -o app/static/assets/images/logo.png https://www.img2link.com/images/2025/05/11/925df1b49fc1713d0cbbc843e1032eab.png
+curl -o app/static/assets/images/new_logo.png https://www.img2link.com/images/2025/05/11/75f87338d4ea408c849434f3150c7fd8.png
 
 # Email Assets (placeholders; replace with your own if available)
 # For logo-white.png, logo-icon.png, social-*.png, use placeholder images or create them
 curl -o app/static/assets/images/logo-white.png https://via.placeholder.com/150x50/FFFFFF/000000?text=Logo
 curl -o app/static/assets/images/logo-icon.png https://via.placeholder.com/28x28/FFFFFF/000000?text=Icon
-curl -o app/static/assets/images/social-facebook.png https://via.placeholder.com/20x20/3b5998/FFFFFF?text=FB
-curl -o app/static/assets/images/social-twitter.png https://via.placeholder.com/20x20/1da1f2/FFFFFF?text=TW
-curl -o app/static/assets/images/social-linkedin.png https://via.placeholder.com/20x20/0077b5/FFFFFF?text=LI
+curl -o app/static/assets/images/social-facebook.png "https://cdn-icons-png.freepik.com/256/1409/1409946.png?ga=GA1.1.750490589.1747143748&semt=ais_hybrid"
+curl -o app/static/assets/images/social-linkedin.png "https://www.img2link.com/images/2025/05/13/067147b2aeb3f1af21948b2f486b2fbc.png"
+curl -o app/static/assets/images/social-twitter.png "https://www.img2link.com/images/2025/05/13/0c86b4750c65a560e1684aa369dc6b44.png"
 
 # Set permissions
 chmod -R 755 app/static/assets
