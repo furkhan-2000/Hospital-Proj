@@ -61,7 +61,6 @@
     .section-flex {
       display:flex; flex-wrap:wrap; padding:3rem 1rem; max-width:1200px; margin:auto; gap:2rem;
     }
-    /* Rectangle frame for Section 3 images */
     #rotate {
       flex:1 1 450px;
       position:relative;
@@ -77,7 +76,6 @@
     }
     #rotate img.active { opacity:1; }
 
-    /* Move tool right and enlarge */
     .upload-section { flex:1 1 550px; display:flex; align-items:center; margin-left:auto; }
     .tool-container { background:#fff; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.1); padding:2.5rem; width:100%; max-width:700px; }
     .tool-header { display:flex; align-items:center; margin-bottom:1.5rem; }
@@ -91,7 +89,20 @@
     .buttons .clear { background:#f0f0f0; color:var(--text); }
     #result { margin-top:1.5rem; padding:14px; background:#fafafa; border-radius:4px; white-space:pre-wrap; }
 
-    footer { background:#000; color:#fff; text-align:center; padding:1rem 0; font-size:.9rem; }
+    footer {
+      background: transparent;
+      color: #000;
+      text-align: center;
+      padding: 1rem 0;
+      font-size: .9rem;
+      position: relative;
+    }
+    footer .logo {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   </style>
 </head>
 <body>
@@ -118,10 +129,10 @@
 
   <section class="section-flex" id="section3">
     <div id="rotate">
-      <img src="https://img.freepik.com/free-vector/gradient-urine-color-infographic_23-2150137193.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740" class="active">
-      <img src="https://img.freepik.com/free-vector/gradient-urine-color-infographic_23-2150137187.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
-      <img src="https://img.freepik.com/free-vector/water-balance-illustration-with-human-body-flat-isolated_1284-30174.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
-      <img src="https://img.freepik.com/free-vector/flat-style-water-body-thematic-infographics-concept_126523-1504.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+      <img src="https://img.freepik.com/free-vector/gradient-urine-color-infographic_23-2150137193.jpg" class="active">
+      <img src="https://img.freepik.com/free-vector/gradient-urine-color-infographic_23-2150137187.jpg">
+      <img src="https://img.freepik.com/free-vector/water-balance-illustration-with-human-body-flat-isolated_1284-30174.jpg">
+      <img src="https://img.freepik.com/free-vector/flat-style-water-body-thematic-infographics-concept_126523-1504.jpg">
     </div>
     <div class="upload-section">
       <div class="tool-container">
@@ -143,12 +154,16 @@
   </section>
 
   <footer>
-     © 2025 Al-Riyadh Vantage Hospital. All Rights Reserved | Aligned with Saudi Vision 2030 <br/>
-        Designed, Developed & Engineered by Khan Mohammed 
+    <div class="logo">
+      <a href="https://www.img2link.com/image/logo.9cllM">
+        <img src="https://www.img2link.com/images/2025/05/11/75f87338d4ea408c849434f3150c7fd8.png" alt="logo" border="0" width="60">
+      </a>
+    </div>
+    © 2025 Al Riyadh Vantage Hospital. All Rights Reserved | Aligned with Saudi Vision 2030 <br/>
+    Designed, Developed & Engineered by Khan Mohammed
   </footer>
 
   <script>
-    // Scroll animations
     const sections = document.querySelectorAll('section');
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => e.isIntersecting
@@ -157,7 +172,6 @@
     }, { threshold: 0.3 });
     sections.forEach(s => obs.observe(s));
 
-    // Rotate images in Section 2 frame
     function setupRotation(containerId) {
       const imgs = document.querySelectorAll(`#${containerId} img`);
       let idx = 0;
@@ -169,7 +183,6 @@
     }
     setupRotation('section2Rotate');
 
-    // Rotate images in Section 3 frame
     (function() {
       const imgs = document.querySelectorAll('#rotate img');
       let idx = 0;
@@ -180,7 +193,6 @@
       }, 5000);
     })();
 
-    // Form submit
     document.getElementById('uploadForm').addEventListener('submit', async e => {
       e.preventDefault();
       const fd = new FormData(e.target);
@@ -194,6 +206,5 @@
       }
     });
   </script>
-
 </body>
 </html>
