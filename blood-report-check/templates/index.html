@@ -1,152 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Blood Analysis Uploader</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            background: #f7f9fa;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 420px;
-            margin: 60px auto;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-            padding: 32px 28px 24px 28px;
-        }
-        h2 {
-            text-align: center;
-            color: #2d3a4b;
-            margin-bottom: 24px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-        input[type='file'], select {
-            padding: 8px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            background: #f9fafb;
-        }
-        button {
-            background: #2563eb;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 12px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        button:hover {
-            background: #1d4ed8;
-        }
-        .result, .error {
-            margin-top: 24px;
-            padding: 16px;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-        .result {
-            background: #e0f7fa;
-            color: #065f46;
-            word-break: break-all;
-        }
-        .error {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #2563eb;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg);}
-            100% { transform: rotate(360deg);}
-        }
-        @media (max-width: 500px) {
-            .container {
-                margin: 20px 8px;
-                padding: 18px 8px 12px 8px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Insights – Upload Blood Test Report</title>
+  <style>
+    :root {
+      --primary: #007BFF;
+      --text: #333333;
+      --background: #FFFFFF;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    section { opacity:0; transform: translateY(50px); transition: all 0.6s ease-in-out; }
+    section.visible { opacity:1; transform: translateY(0); }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      width:100%; height:50vh;
+      background: url('https://img.freepik.com/free-photo/dark-dense-red-cloud-smoke-liquid_23-2148102224.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740') center center/cover no-repeat;
+      display:flex; align-items:center; justify-content:center;
+      filter: brightness(0.6);
+    }
+    .hero::before {
+      content:''; position:absolute; inset:0;
+      box-shadow: inset 0 0 120px rgba(139, 0, 0, 0.6);
+    }
+    .hero h1 {
+      position:relative; color:#FFFFFF; font-size:3rem;
+      text-shadow: 0 0 20px rgba(255,255,255,1);
+    }
+
+    /* Section 2 */
+    .description {
+      display:flex; flex-wrap:wrap; padding:3rem 1rem; max-width:1200px; margin:auto; gap:2rem;
+    }
+    .desc-text { flex:1 1 400px; }
+    .desc-text h2 { color:var(--primary); font-size:2rem; margin-bottom:1rem; }
+    .desc-text p { margin:1rem 0; line-height:1.6; }
+
+    /* Blob-shaped rotation frame Section 2 */
+    .rotate-section {
+      flex:1 1 400px; position:relative;
+      clip-path: polygon(20% 5%, 75% 15%, 90% 50%, 70% 90%, 30% 85%, 10% 60%);
+      height:400px; overflow:hidden;
+    }
+    .rotate-section img {
+      position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;
+      opacity:0; transition:opacity 1s;
+    }
+    .rotate-section img.active { opacity:1; }
+
+    /* Section 3 */
+    .section-flex {
+      display:flex; flex-wrap:wrap; padding:3rem 1rem; max-width:1200px; margin:auto; gap:2rem;
+    }
+    /* Rectangle frame for Section 3 images */
+    #rotate {
+      flex:1 1 450px;
+      position:relative;
+      height:400px; overflow:visible;
+      border: none;
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    #rotate img {
+      position:absolute; top:50%; left:50%; width:80%; height:80%; transform: translate(-50%, -50%);
+      object-fit:contain;
+      opacity:0; transition:opacity 1s;
+    }
+    #rotate img.active { opacity:1; }
+
+    /* Upload section */
+    .upload-section { flex:1 1 550px; display:flex; align-items:center; margin-left:auto; }
+    .tool-container { background:#fff; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.1); padding:2.5rem; width:100%; max-width:700px; }
+    .tool-header { display:flex; align-items:center; margin-bottom:1.5rem; }
+    .tool-header img.icon { width:70px; margin-right:1rem; }
+    .tool-header h3 { font-size:2rem; color:var(--primary); }
+    .tool-container label { display:block; margin-bottom:.5rem; font-weight:bold; }
+    .tool-container select, .tool-container input[type=file] { width:100%; padding:12px; margin-bottom:1.5rem; border:1px solid #ccc; border-radius:4px; }
+    .buttons { display:flex; gap:1rem; }
+    .buttons button { flex:1; padding:14px; font-weight:bold; border:none; border-radius:4px; cursor:pointer; transition:background .2s; }
+    .buttons .upload { background:var(--primary); color:#fff; }
+    .buttons .clear { background:#f0f0f0; color:var(--text); }
+    #result { margin-top:1.5rem; padding:14px; background:#fafafa; border-radius:4px; white-space:pre-wrap; }
+
+    footer { background:#000; color:#fff; text-align:center; padding:1rem 0; font-size:.9rem; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Blood Analysis Uploader</h2>
-        <form id="uploadForm">
-            <label for="gender" style="font-weight:500;">Gender:</label>
-            <select name="gender" id="gender" required>
-                <option value="male" selected>Male</option>
-                <option value="female">Female</option>
-            </select>
-            <input type="file" name="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.dcm" required>
-            <button type="submit">Analyze</button>
-        </form>
-        <div id="loader" class="loader" style="display:none;"></div>
-        <div id="result" class="result" style="display:none;"></div>
-        <div id="error" class="error" style="display:none;"></div>
+  <section class="hero" id="hero">
+    <h1>Blood Insights</h1>
+  </section>
+
+  <section class="description" id="section2">
+    <div class="desc-text">
+      <h2>Our Mission, Our Technology, Our Impact</h2>
+      <p>At Al Riyadh Vantage Hospital, we are revolutionizing blood testing by fusing compassionate care with breakthrough technology. Our commitment is showcased in our dedicated blood test services, which harness advanced analysis tools to deliver precise, rapid results.</p>
+      <p>Our state-of-the-art blood analysis system employs cutting-edge automation and digital imaging to detect vital biomarkers for hematological, metabolic, and systemic conditions. By integrating high-resolution imaging with optimized sample processing, we reduce errors and accelerate diagnoses, ensuring that every blood test provides valuable insights for personalized treatment.</p>
+      <p>Within our specialized blood testing laboratory, our experienced clinicians and scientists work in unison to fully leverage this advanced technology. Using proprietary protocols and next-generation analytical methods tailored specifically to blood samples, our lab upholds the highest standards of precision and reliability. Every blood test is rigorously monitored through stringent quality controls, achieving diagnostic accuracy in record time.</p>
+      <p>At Al Riyadh Vantage Hospital, we are dedicated to leading the way in blood test diagnostics. By seamlessly blending technological ingenuity with heartfelt care, we offer an environment where every patient is prioritized and each blood test contributes to a healthier, more informed community.</p>
     </div>
-    <script>
-        const form = document.getElementById('uploadForm');
-        const fileInput = document.getElementById('fileInput');
-        const resultDiv = document.getElementById('result');
-        const errorDiv = document.getElementById('error');
-        const loader = document.getElementById('loader');
+    <div class="rotate-section" id="section2Rotate">
+      <img src="https://img.freepik.com/free-photo/hand-with-protective-gloves-holding-blood-samples-covid-test_23-2148958362.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740" class="active">
+      <img src="https://img.freepik.com/free-photo/coronavirus-vaccine-lab-with-samples_23-2148920828.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+      <img src="https://img.freepik.com/free-photo/view-laboratory-test-tube-samples_23-2151053760.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+      <img src="https://img.freepik.com/free-vector/blood-analysis-medical-research-illustration_1308-178609.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+      <img src="https://img.freepik.com/free-photo/doctor-hands-sterile-gloves-holding-test-tube_651396-3383.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+    </div>
+  </section>
 
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            resultDiv.style.display = 'none';
-            errorDiv.style.display = 'none';
-            loader.style.display = 'block';
+  <section class="section-flex" id="section3">
+    <div id="rotate">
+      <img src="https://img.freepik.com/free-vector/gradient-blood-infographic_23-2148736402.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740" class="active">
+      <img src="https://img.freepik.com/free-vector/gradient-blood-infographic_52683-50145.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+      <img src="https://img.freepik.com/free-vector/drawn-blood-infographic-with-illustrated-elements_23-2148729244.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+      <img src="https://img.freepik.com/free-vector/flat-d-isometric-style-thematic-real-estate-infographics-concept_126523-1449.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+    </div>
+    <div class="upload-section">
+      <div class="tool-container">
+        <div class="tool-header">
+          <img class="icon" src="https://media-hosting.imagekit.io/3ab49b6229dd40c8/ezgif.com-gif-maker.gif?Expires=1841739483&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=1YWoJcjTigPyKLXEoEpHSRU4-eQr~aRU96OPo0S8hvc-fLf5bMumH0li2ryyDzqpXTDhe9MwcySilKLf9o0HhVWGsGadSIIkEETWjp59alQakp2NgZ2M84Vwk2w8dcrqdV1f31cO09GOTZkHX2CEmad9YXUBkuABQPBjjjRzZko1b6agE0wE4tMFwYL1tSQeKvJwOhCWKifHKBYLm5bwLw2CvHCW2TdpZXMBVn83KIrZxYtX2Vjf1GzQ3Ii-T4l49ALr8Bqtw9SzCp2MZ509Odfm28NOPOgCgDlWt27KgPJ-t-NUWjy8tb-rZIxMyQERYcF8iAl3dtWlRgHGLXGt8Q__" alt="Blood Test Icon">
+          <h3>Upload Blood Test Report</h3>
+        </div>
+        <form id="uploadForm" action="/api/analyze" method="post" enctype="multipart/form-data">
+          <label for="gender">Gender:</label>
+          <select name="gender" id="gender" required>
+            <option value="male" selected>Male</option>
+            <option value="female">Female</option>
+          </select>
+          <label for="report">Select PDF, Image, or DICOM File:</label>
+          <input id="report" name="file" type="file" accept=".pdf,.jpeg,.jpg,.png,.dcm" required>
+          <div class="buttons">
+            <button class="upload" type="submit">Upload & Analyze</button>
+            <button class="clear" type="reset">Clear</button>
+          </div>
+        </form>
+        <div id="result"></div>
+      </div>
+    </div>
+  </section>
 
-            const file = fileInput.files[0];
-            const gender = document.getElementById('gender').value;
-            if (!file) {
-                loader.style.display = 'none';
-                errorDiv.textContent = 'Please select a file.';
-                errorDiv.style.display = 'block';
-                return;
-            }
+  <footer>
+    © 2025 Al-Riyadh Vantage Hospital. All Rights Reserved.<br/>
+    Committed to Excellence in Patient-Centric Care | Aligned with Saudi Vision 2030
+  </footer>
 
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('gender', gender);
+  <script>
+    // Scroll animations
+    const sections = document.querySelectorAll('section');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => e.isIntersecting
+        ? e.target.classList.add('visible')
+        : e.target.classList.remove('visible'));
+    }, { threshold: 0.3 });
+    sections.forEach(s => obs.observe(s));
 
-            try {
-                const response = await fetch('/api/analyze', {
-                    method: 'POST',
-                    body: formData
-                });
-                loader.style.display = 'none';
-                const data = await response.json();
-                if (response.ok && data.status === 'ok') {
-                    let html = `<strong>Recommendations & Health Status:</strong><div style="margin:10px 0 0 0;white-space:pre-line;">${data.data.recommendations}</div>`;
-                    resultDiv.innerHTML = html;
-                    resultDiv.style.display = 'block';
-                } else {
-                    errorDiv.textContent = data.error || 'An error occurred.';
-                    errorDiv.style.display = 'block';
-                }
-            } catch (err) {
-                loader.style.display = 'none';
-                errorDiv.textContent = 'Server error. Please try again later.';
-                errorDiv.style.display = 'block';
-            }
+    // Rotate images in Section 2 frame
+    function setupRotation(containerId) {
+      const imgs = document.querySelectorAll(`#${containerId} img`);
+      let idx = 0;
+      setInterval(() => {
+        imgs[idx].classList.remove('active');
+        idx = (idx + 1) % imgs.length;
+        imgs[idx].classList.add('active');
+      }, 5000);
+    }
+    setupRotation('section2Rotate');
+
+    // Rotate images in Section 3 frame
+    (function() {
+      const imgs = document.querySelectorAll('#rotate img');
+      let idx = 0;
+      setInterval(() => {
+        imgs[idx].classList.remove('active');
+        idx = (idx + 1) % imgs.length;
+        imgs[idx].classList.add('active');
+      }, 5000);
+    })();
+
+    // Form submit
+    const form = document.getElementById('uploadForm');
+    const resultDiv = document.getElementById('result');
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      resultDiv.innerText = '';
+      const formData = new FormData(e.target);
+      try {
+        const response = await fetch(e.target.action, {
+          method: 'POST',
+          body: formData
         });
-    </script>
+        const data = await response.json();
+        if (response.ok && data.status === 'ok') {
+          resultDiv.innerText = `Recommendations & Health Status:\n${data.data.recommendations}`;
+        } else {
+          resultDiv.innerText = data.error || 'An error occurred.';
+        }
+      } catch (err) {
+        resultDiv.innerText = 'Server error. Please try again later.';
+      }
+    });
+  </script>
 </body>
 </html>
