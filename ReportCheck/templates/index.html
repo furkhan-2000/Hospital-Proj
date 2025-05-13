@@ -1,124 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload Medical Report</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UrInsights – Upload Medical Report</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --primary: #007BFF;
+      --text: #333333;
+      --background: #FFFFFF;
     }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: Arial, sans-serif;
-      background: #FFF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      background: var(--background);
+      color: var(--text);
+      overflow-x: hidden;
     }
-    .container {
-      background: #FFF;
-      border: 2px solid #000;
-      border-radius: 4px;
-      padding: 20px;
-      width: 90%;
-      max-width: 480px;
+    section { opacity:0; transform: translateY(50px); transition: all 0.6s ease-in-out; }
+    section.visible { opacity:1; transform: translateY(0); }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      width:100%; height:50vh;
+      background: url('https://cdn.pixabay.com/photo/2024/09/05/17/42/ai-generated-9025532_1280.jpg') center center/cover no-repeat;
+      display:flex; align-items:center; justify-content:center;
+      filter: brightness(0.6);
     }
-    h1 {
-      font-size: 1.5rem;
-      color: #000;
-      margin-bottom: 1rem;
-      text-align: center;
+    .hero::before {
+      content:''; position:absolute; inset:0;
+      box-shadow: inset 0 0 80px rgba(255,255,255,0.4);
     }
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #000;
+    .hero h1 {
+      position:relative; color:#FFFFFF; font-size:3rem;
+      text-shadow: 0 0 60px rgba(255,255,255,1);
     }
-    input[type="file"] {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #000;
-      border-radius: 4px;
-      margin-bottom: 1rem;
-      background: #FFF;
-      color: #000;
+
+    /* Section 2 */
+    .description {
+      display:flex; flex-wrap:wrap; padding:3rem 1rem; max-width:1200px; margin:auto; gap:2rem;
     }
-    .buttons {
-      display: flex;
-      gap: 0.5rem;
+    .desc-text { flex:1 1 400px; }
+    .desc-text h2 { color:var(--primary); font-size:2rem; margin-bottom:1rem; }
+    .desc-text p { margin:1rem 0; line-height:1.6; }
+
+    /* Blob-shaped rotation frame Section 2 */
+    .rotate-section {
+      flex:1 1 400px; position:relative;
+      clip-path: polygon(20% 5%, 75% 15%, 90% 50%, 70% 90%, 30% 85%, 10% 60%);
+      height:400px; overflow:hidden;
     }
-    button {
-      flex: 1;
-      padding: 10px;
-      font-size: 1rem;
+    .rotate-section img {
+      position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;
+      opacity:0; transition:opacity 1s;
+    }
+    .rotate-section img.active { opacity:1; }
+
+    /* Section 3 */
+    .section-flex {
+      display:flex; flex-wrap:wrap; padding:3rem 1rem; max-width:1200px; margin:auto; gap:2rem;
+    }
+    /* Rectangle frame for Section 3 images */
+    #rotate {
+      flex:1 1 450px;
+      position:relative;
+      height:400px; overflow:visible;
       border: none;
       border-radius: 4px;
-      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
-    button.upload {
-      background: #000;
-      color: #FFF;
+    #rotate img {
+      position:absolute; top:50%; left:50%; width:80%; height:80%; transform: translate(-50%, -50%);
+      object-fit:contain;
+      opacity:0; transition:opacity 1s;
     }
-    button.clear {
-      background: #FFF;
-      color: #000;
-      border: 2px solid #000;
-    }
-    .result {
-      margin-top: 1rem;
-      padding: 10px;
-      color: #000;
-      border: 1px solid #000;
-      border-radius: 4px;
-      white-space: pre-wrap;
-    }
+    #rotate img.active { opacity:1; }
+
+    /* Move tool right and enlarge */
+    .upload-section { flex:1 1 550px; display:flex; align-items:center; margin-left:auto; }
+    .tool-container { background:#fff; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.1); padding:2.5rem; width:100%; max-width:700px; }
+    .tool-header { display:flex; align-items:center; margin-bottom:1.5rem; }
+    .tool-header img.icon { width:70px; margin-right:1rem; }
+    .tool-header h3 { font-size:2rem; color:var(--primary); }
+    .tool-container label { display:block; margin-bottom:.5rem; font-weight:bold; }
+    .tool-container input[type=file] { width:100%; padding:12px; margin-bottom:1.5rem; border:1px solid #ccc; border-radius:4px; }
+    .buttons { display:flex; gap:1rem; }
+    .buttons button { flex:1; padding:14px; font-weight:bold; border:none; border-radius:4px; cursor:pointer; transition:background .2s; }
+    .buttons .upload { background:var(--primary); color:#fff; }
+    .buttons .clear { background:#f0f0f0; color:var(--text); }
+    #result { margin-top:1.5rem; padding:14px; background:#fafafa; border-radius:4px; white-space:pre-wrap; }
+
+    footer { background:#000; color:#fff; text-align:center; padding:1rem 0; font-size:.9rem; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Upload Medical Report</h1>
-    <form id="uploadForm" action="/diagnostics/upload" method="post" enctype="multipart/form-data">
-      <label for="report">Select PDF, Image, or DICOM File:</label>
-      <input id="report" name="report" type="file" accept=".pdf,.jpeg,.jpg,.png,.dcm" required>
-      <div class="buttons">
-        <button class="upload" type="submit">Upload & Analyze</button>
-        <button class="clear" type="reset">Clear</button>
+  <section class="hero" id="hero">
+    <h1>UrInsights</h1>
+  </section>
+
+  <section class="description" id="section2">
+    <div class="desc-text">
+      <h2>Our Identity, Our Purpose, Our Impact</h2>
+      <p>At Al Riyadh Vantage Hospital, we are transforming healthcare by harmonizing compassion with high-caliber innovation. Our commitment to helping people is evident in every service we provide—from personalized patient care to state-of-the-art diagnostic innovations that ensure each individual receives the best possible attention and treatment.</p>
+      <p>Our advanced urine testing tool stands as a flagship of our technological prowess. It integrates cutting-edge automation with digital imaging, allowing us to rapidly and accurately detect early biomarkers of kidney, urinary, and systemic conditions. Through streamlined, automated sample processing and high-resolution analysis, the tool minimizes human error and accelerates diagnosis, ensuring that patients can access timely treatments and tailored care plans.</p>
+      <p>Within our own sophisticated laboratory, highly trained clinicians and lab scientists work in unison to harness the capabilities of this advanced technology. The lab uses proprietary protocols and next-generation reagent systems that foster precision. Every test is meticulously monitored by quality control systems, enabling us to achieve diagnostic clarity in record time. This innovative approach not only enhances patient outcomes but also shapes a future where preventive care and early intervention are the norm.</p>
+      <p>Al Riyadh Vantage Hospital is proud to lead the way in modern diagnosis and patient care. Our dedication to blending technological excellence with compassionate service creates an ecosystem where every patient feels valued and every diagnostic test contributes to a healthier, more informed community.</p>
+    </div>
+    <div class="rotate-section" id="section2Rotate">
+      <img src="https://img.freepik.com/free-photo/doctor-holding-vial-prp-treatment-front-view_23-2149404756.jpg" class="active">
+      <img src="https://img.freepik.com/free-photo/view-laboratory-test-tube-samples_23-2151053774.jpg">
+      <img src="https://img.freepik.com/free-photo/close-up-view-science-concept_23-2148623738.jpg">
+      <img src="https://img.freepik.com/free-photo/full-shot-man-vacuuming-floor_23-2149345547.jpg">
+      <img src="https://img.freepik.com/free-photo/full-shot-man-hazmat-suit-cleaning_23-2149345581.jpg">
+    </div>
+  </section>
+
+  <section class="section-flex" id="section3">
+    <div id="rotate">
+      <img src="https://img.freepik.com/free-vector/gradient-urine-color-infographic_23-2150137193.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740" class="active">
+      <img src="https://img.freepik.com/free-vector/gradient-urine-color-infographic_23-2150137187.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+      <img src="https://img.freepik.com/free-vector/water-balance-illustration-with-human-body-flat-isolated_1284-30174.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+      <img src="https://img.freepik.com/free-vector/flat-style-water-body-thematic-infographics-concept_126523-1504.jpg?ga=GA1.1.275656072.1746884627&semt=ais_hybrid&w=740">
+    </div>
+    <div class="upload-section">
+      <div class="tool-container">
+        <div class="tool-header">
+          <img class="icon" src="https://imgiu.com/uploads/anon_6c23209239805752eda7ff93c87a4096/WIiW7zgTc2/16060039-unscreen.gif" alt="Urine Test Icon">
+          <h3>Upload Medical Report</h3>
+        </div>
+        <form id="uploadForm" action="/diagnostics/upload" method="post" enctype="multipart/form-data">
+          <label for="report">Select PDF, Image, or DICOM File:</label>
+          <input id="report" name="report" type="file" accept=".pdf,.jpeg,.jpg,.png,.dcm" required>
+          <div class="buttons">
+            <button class="upload" type="submit">Upload &amp; Analyze</button>
+            <button class="clear" type="reset">Clear</button>
+          </div>
+        </form>
+        <div id="result"></div>
       </div>
-    </form>
-    <!-- This is where the human-readable output will be displayed -->
-    <div id="result" class="result"></div>
-  </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Al-Riyadh Vantage Hospital. All Rights Reserved.<br/>
+    Committed to Excellence in Patient-Centric Care | Aligned with Saudi Vision 2030
+  </footer>
 
   <script>
-    // Intercept the form submission to process the response and display human-readable text.
-    document.getElementById('uploadForm').addEventListener('submit', async function(e) {
-      e.preventDefault(); // prevent default form submission
-      const form = e.target;
-      const formData = new FormData(form);
+    // Scroll animations
+    const sections = document.querySelectorAll('section');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => e.isIntersecting
+        ? e.target.classList.add('visible')
+        : e.target.classList.remove('visible'));
+    }, { threshold: 0.3 });
+    sections.forEach(s => obs.observe(s));
 
+    // Rotate images in Section 2 frame
+    function setupRotation(containerId) {
+      const imgs = document.querySelectorAll(`#${containerId} img`);
+      let idx = 0;
+      setInterval(() => {
+        imgs[idx].classList.remove('active');
+        idx = (idx + 1) % imgs.length;
+        imgs[idx].classList.add('active');
+      }, 5000);
+    }
+    setupRotation('section2Rotate');
+
+    // Rotate images in Section 3 frame
+    (function() {
+      const imgs = document.querySelectorAll('#rotate img');
+      let idx = 0;
+      setInterval(() => {
+        imgs[idx].classList.remove('active');
+        idx = (idx + 1) % imgs.length;
+        imgs[idx].classList.add('active');
+      }, 5000);
+    })();
+
+    // Form submit
+    document.getElementById('uploadForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
       try {
-        const res = await fetch(form.action, {
-          method: form.method,
-          body: formData
-        });
+        const res = await fetch(e.target.action, { method: 'POST', body: fd });
         if (!res.ok) throw new Error('Network response was not ok');
-        const data = await res.json();
-
-        // Extract and display the human-readable report.
-        let outputText = "";
-        if (data && data.analysis && data.analysis.report) {
-          outputText = data.analysis.report.trim();
-        } else {
-          outputText = "No report available.";
-        }
-        document.getElementById('result').innerText = outputText;
-      } catch (error) {
-        document.getElementById('result').innerText = "Error: " + error.message;
+        const d = await res.json();
+        document.getElementById('result').innerText = d.analysis?.report || 'No report available.';
+      } catch (err) {
+        document.getElementById('result').innerText = 'Error: ' + err.message;
       }
     });
   </script>
+
 </body>
 </html>
