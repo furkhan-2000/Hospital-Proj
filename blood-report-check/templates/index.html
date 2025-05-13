@@ -61,7 +61,6 @@
     .section-flex {
       display:flex; flex-wrap:wrap; padding:3rem 1rem; max-width:1200px; margin:auto; gap:2rem;
     }
-    /* Rectangle frame for Section 3 images */
     #rotate {
       flex:1 1 450px;
       position:relative;
@@ -91,7 +90,22 @@
     .buttons .clear { background:#f0f0f0; color:var(--text); }
     #result { margin-top:1.5rem; padding:14px; background:#fafafa; border-radius:4px; white-space:pre-wrap; }
 
-    footer { background:#000; color:#fff; text-align:center; padding:1rem 0; font-size:.9rem; }
+    /* Footer */
+    footer {
+      position: relative;
+      background: transparent;
+      color: #000;
+      padding: 1rem 0;
+      text-align: center;
+      font-size: .9rem;
+      line-height: 1.4;
+    }
+    footer img {
+      position: absolute;
+      left: 1rem;
+      bottom: 1rem;
+      height: 40px;
+    }
   </style>
 </head>
 <body>
@@ -148,8 +162,11 @@
   </section>
 
   <footer>
-    © 2025 Al-Riyadh Vantage Hospital. All Rights Reserved | Aligned with Saudi Vision 2030 <br/>
-        Designed, Developed & Engineered by Khan Mohammed 
+    <a href="https://www.img2link.com/image/logo.9cllM" target="_blank">
+      <img src="https://www.img2link.com/images/2025/05/11/75f87338d4ea408c849434f3150c7fd8.png" alt="logo" border="0">
+    </a>
+    © 2025 Al Riyadh Vantage Hospital. All Rights Reserved | Aligned with Saudi Vision 2030<br>
+    Designed, Developed & Engineered by Khan Mohammed
   </footer>
 
   <script>
