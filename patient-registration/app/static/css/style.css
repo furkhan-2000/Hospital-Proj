@@ -5,11 +5,14 @@
     box-sizing: border-box;
 }
 
+/* Ensure no default margin or padding on body */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     color: #333;
     background: #F4F4F4;
+    margin: 0;
+    padding: 0;
 }
 
 /* Variables */
@@ -32,15 +35,71 @@ body {
     padding: 0 20px;
 }
 
+/* Header with Hamburger Menu (Top Center) */
+header {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+}
+
+/* Hamburger Button in Header */
+header .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Sidebar Navigation */
+.sidebar-menu {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Hidden by default */
+    width: 250px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    transition: left 0.3s ease-in-out;
+    padding-top: 60px;
+    z-index: 1000;
+}
+
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu ul li {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar-menu.open {
+    left: 0;
+}
+
 /* Hero Section */
 .hero {
     position: relative;
     width: 100%;
-    height: 100vh;
-    background: url('/static/assets/images/doctor.jpg') center/cover scroll;
+    min-height: 100vh; /* Ensure full viewport height */
+    background: url('/static/assets/images/doctor.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0; /* Remove any margins */
+    top: 0; /* Align to top */
+    padding-top: 50px; /* Offset for fixed header */
 }
 
 .hero-overlay {
@@ -49,36 +108,41 @@ body {
     background: rgba(0,0,0,0.4);
 }
 
-/* Updated Hero Container to Center Content */
+/* Hero Container for Centering */
 .hero .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    min-height: 100vh; /* Ensure container spans viewport */
     position: relative;
-    top: 0;
 }
 
+/* Hero Content */
 .hero-content {
     position: relative;
     text-align: center;
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-content h1 {
     font-size: 3rem;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
 }
 
 .hero-content p {
     font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .overlay-video {
     width: 70vw;
     max-width: 800px;
-    margin-top: 1rem;
     border-radius: 8px;
 }
 
@@ -489,35 +553,34 @@ body {
 }
 
 .toast.success {
-    background-color: var(--success-color);
+    background: var(--success-color);
 }
 
 .toast.error {
-    background-color: var(--error-color);
+    background: var(--error-color);
 }
 
 /* Footer */
 .footer {
-    background: var(--primary);
-    color: #fff;
+    background: transparent;
+    color: #000;
     padding: 2rem;
-    text-align: center;
 }
 
-.footer-container {
+.footer-wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin: 1rem 0;
+}
+
+.footer-logo {
+    margin-right: 2rem;
 }
 
 .footer-logo img {
-    max-height: 40px;
-    margin-right: 1rem;
+    max-height: 60px;
 }
 
-.social-icons {
+.footer-content {
     flex: 1;
     text-align: center;
 }
@@ -525,8 +588,12 @@ body {
 .social-icons a {
     font-size: 1.5rem;
     margin: 0 .5rem;
-    color: #fff;
+    color: #000;
     text-decoration: none;
+}
+
+.social-icons a img {
+    max-height: 30px; /* Reduced from 40px to make icons smaller */
 }
 
 .social-icons a:hover {
@@ -538,150 +605,23 @@ body {
     font-size: 14px;
 }
 
-/* Updated Footer Centering */
-/* This will center all footer text except the logo, which remains fixed on the left */
-#footer {
-    text-align: center;
-    position: relative;
-}
-#footer .footer-container {
-    justify-content: center;
-    position: relative;
-}
-#footer .footer-container .footer-logo {
-    position: absolute;
-    left: 20px;
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-
-    .primary-menu {
-        display: none;
-        width: 100%;
-        position: absolute;
-        top: 80px;
-        left: 0;
-        background: var(--primary);
-    }
-
-    .primary-menu.active {
-        display: block;
-    }
-
-    .primary-menu ul {
-        flex-direction: column;
-        padding: 20px;
-    }
-
-    .primary-menu ul li {
-        margin: 10px 0;
-    }
-
-    .compassion .text {
-        flex: 1 1 100%;
-        padding-right: 0;
-    }
-
-    .compassion .slider {
-        flex: 1 1 100%;
-    }
-
-    .footer-container {
+    .footer-wrapper {
         flex-direction: column;
         align-items: center;
     }
 
-    .footer-logo,
-    .social-icons {
-        margin: 0.5rem 0;
+    .footer-logo {
+        margin-right: 0;
+        margin-bottom: 1rem;
     }
-}
 
-/* Form Styles from Your style.css */
-.form-container {
-    background: #FFFFFF;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 2rem;
-}
+    .footer-content {
+        text-align: center;
+    }
 
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-input, select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 2px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.btn {
-    background: #3498db;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* New CSS for Hamburger Menu & Sidebar Navigation */
-
-/* Header with Hamburger Menu (Top Center) */
-header {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1001;
-}
-
-/* Hamburger Button in Header */
-header .menu-toggle {
-    display: block;
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #fff;
-    cursor: pointer;
-}
-
-/* Sidebar Navigation */
-.sidebar-menu {
-    position: fixed;
-    top: 0;
-    left: -250px; /* Hidden by default */
-    width: 250px;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    transition: left 0.3s ease-in-out;
-    padding-top: 60px;
-    z-index: 1000;
-}
-
-.sidebar-menu ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar-menu ul li {
-    padding: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.sidebar-menu ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.sidebar-menu.open {
-    left: 0;
+    /* Adjust hero padding for mobile */
+    .hero {
+        padding-top: 40px;
+    }
 }
