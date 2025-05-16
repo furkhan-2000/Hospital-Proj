@@ -14,7 +14,7 @@ services:
       context: ./blood-report-check
       dockerfile: Dockerfile
     environment:
-      FLASK_ENV: test
+      - FLASK_ENV=test
     ports:
       - "5002:5002"
     restart: unless-stopped
@@ -24,7 +24,7 @@ services:
       context: ./urine-report-check
       dockerfile: Dockerfile
     environment:
-      FLASK_ENV: test
+      - FLASK_ENV=test
     ports:
       - "5001:5001"
     restart: unless-stopped

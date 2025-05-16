@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /patient-register
+            pathType: Prefix
+            backend:
+              service:
+                name: patsvc1
+                port:
+                  number: 5003
+          - path: /blood-report-check
+            pathType: Prefix
+            backend:
+              service:
+                name: bloodsvc
+                port:
+                  number: 5002
+          - path: /urine-report-check
+            pathType: Prefix
+            backend:
+              service:
+                name: urineapp
+                port:
+                  number: 5001

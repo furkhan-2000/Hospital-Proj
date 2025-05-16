@@ -42,7 +42,7 @@ spec:
         - name: urinecon
           image: furkhan2000/shark:urine-report
           ports:
-            - containerPort: 5002
+            - containerPort: 5001
           volumeMounts:
             - name: urinevol
               mountPath: /urinestore
@@ -55,12 +55,12 @@ spec:
               memory: "612Mi"
           readinessProbe:
             tcpSocket:
-              port: 5002
+              port: 5001
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
             tcpSocket:
-              port: 5003
+              port: 5001
             initialDelaySeconds: 15
             periodSeconds: 10
       volumes:
@@ -78,9 +78,9 @@ spec:
   selector:
     tier: urineapp
   ports:
-    - port: 5003
+    - port: 5001
       protocol: TCP
-      targetPort: 5003
+      targetPort: 5001
 ---
 #                                                         Network Policies 
 apiVersion: networking.k8s.io/v1 
