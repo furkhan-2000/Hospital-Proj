@@ -1,20 +1,30 @@
 services:
-  urinereportcheck:
+  patient-registration:
     build:
-      context: ./urine-report-check
+      context: ./patient-registration
       dockerfile: Dockerfile
-    environment:
-      - FLASK_ENV=prod
+    env_file:
+      - ./patient-registration/.env
     ports:
-      - "5001:5001"
+      - "5003:5003"
     restart: unless-stopped
 
-  bloodreportcheck:
+  blood-report-check:
     build:
       context: ./blood-report-check
       dockerfile: Dockerfile
     environment:
-      - FLASK_ENV=prod
+      FLASK_ENV: test
     ports:
       - "5002:5002"
+    restart: unless-stopped
+
+  urine-report-check:
+    build:
+      context: ./urine-report-check
+      dockerfile: Dockerfile
+    environment:
+      FLASK_ENV: test
+    ports:
+      - "5001:5001"
     restart: unless-stopped
