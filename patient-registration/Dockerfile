@@ -38,6 +38,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY --chown=appuser:appuser . .
 
+# Run asset download script
+RUN chmod +x download_assets.sh && ./download_assets.sh
+
 # Expose port and healthcheck
 EXPOSE 5003
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
