@@ -52,7 +52,7 @@ spec:
         fsGroup: 2000
       containers:
         - name: patregcon
-          image: 
+          image: furkhan2000/shark:patient-registration
           imagePullPolicy: Always 
           ports:
             - containerPort: 5003
