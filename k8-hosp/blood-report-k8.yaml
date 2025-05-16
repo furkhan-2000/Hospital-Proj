@@ -1,4 +1,4 @@
-#                                       PersistentVolumeClaim 2 for dynamic volume provisioning
+# PersistentVolumeClaim 2 for dynamic volume provisioning
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -12,7 +12,7 @@ spec:
     requests:
       storage: "500Mi"
 ---
-#                                                         deployment for blood report 
+# Deployment for blood report
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -68,7 +68,7 @@ spec:
           persistentVolumeClaim:
             claimName: claim2
 ---
-#                                                                service for blood report 
+# Service for blood report
 apiVersion: v1
 kind: Service
 metadata:
@@ -81,26 +81,28 @@ spec:
     - port: 5002
       protocol: TCP
       targetPort: 5002
---- 
-#                                                                Network Policies
-apiVersion: networking.k8s.io/v1 
-kind: NetworkPolicy 
-metadata: 
-  name: bloodnp
-  namespace: prod 
-spec: 
- podSelector: 
-  matchLabels: 
-   tier: bloodapp 
- policyTypes: 
- - ingress 
- - egress 
- ingress: 
-  podSelector: 
-   matchLabels: 
-     tier: patreg
 ---
-#                                                               autoscaling for blood report 
+# NetworkPolicy for blood report
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: bloodnp
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      tier: bloodapp
+  policyTypes:
+    - ingress
+    - egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              tier: patreg
+  egress: []
+---
+# HorizontalPodAutoscaler for blood report
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:

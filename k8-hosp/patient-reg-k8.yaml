@@ -64,7 +64,7 @@ spec:
               cpu: "500m"
               memory: "512Mi"
           volumeMounts:
-            - name: patregVol
+            - name: patregvol
               mountPath: /patientstore
           readinessProbe:
             httpGet:
@@ -79,7 +79,7 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 10
       volumes:
-        - name: patregVol
+        - name: patregvol
           persistentVolumeClaim:
             claimName: claim1
 ---
@@ -98,24 +98,25 @@ spec:
       protocol: TCP
 ---
 #                                                                 Network policy
-apiVersion: networking.k8s.io/v1 
-kind: NetworkPolicy 
-metadata: 
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
   name: urinenp
-  namespace: prod 
-spec: 
- podSelector: 
-  matchLabels: 
-    tier: patreg 
- policyTypes: 
- - ingress 
- - egress 
- egress: 
- ports: 
-  - protocol : TCP 
-    port: 5002
-  - protocol : TCP
-    port: 5003
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      tier: patreg
+  policyTypes:
+    - ingress
+    - egress
+  ingress: [] 
+  egress:
+    - ports:
+        - protocol: TCP
+          port: 5002
+        - protocol: TCP
+          port: 5003
 ---
 #                                                                 HorizontalPodAutoscaler
 apiVersion: autoscaling/v2

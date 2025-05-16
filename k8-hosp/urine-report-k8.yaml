@@ -1,4 +1,4 @@
-#                                        PersistentVolumeClaim 2 for dynamic volume provisioning
+# PersistentVolumeClaim 3 for dynamic volume provisioning
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -12,7 +12,7 @@ spec:
     requests:
       storage: "500Mi"
 ---
-#                                                       Deployment for urine report 
+# Deployment for urine report
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -68,7 +68,7 @@ spec:
           persistentVolumeClaim:
             claimName: claim3
 ---
-#                                                  service for urine report  
+# Service for urine report
 apiVersion: v1
 kind: Service
 metadata:
@@ -82,25 +82,27 @@ spec:
       protocol: TCP
       targetPort: 5001
 ---
-#                                                         Network Policies 
-apiVersion: networking.k8s.io/v1 
-kind: NetworkPolicy 
-metadata: 
+# NetworkPolicy for urine report
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
   name: urinenp
-  namespace: prod 
-spec: 
- podSelector: 
-  matchLabels: 
-   tier: urineapp 
- policyTypes: 
- - ingress 
- - egress 
- ingress: 
-  podSelector: 
-   matchLabels: 
-     tier: patreg
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      tier: urineapp
+  policyTypes:
+    - ingress
+    - egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              tier: patreg
+  egress: []
 ---
-#                                                       autoscaling for urine report 
+# HorizontalPodAutoscaler for urine report
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
