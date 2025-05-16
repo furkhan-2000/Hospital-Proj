@@ -1,0 +1,122 @@
+#                                       PersistentVolumeClaim 2 for dynamic volume provisioning
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim2
+  namespace: prod
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "500Mi"
+---
+#                                                         deployment for blood report 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blood
+  namespace: prod
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      tier: bloodapp
+  template:
+    metadata:
+      labels:
+        tier: bloodapp
+    spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 900
+        fsGroup: 2000
+      containers:
+        - name: bloodcon
+          image: 
+          ports:
+            - containerPort: 5002
+          volumeMounts:
+            - name: bloodvol
+              mountPath: /bloodstore
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "300Mi"
+            limits:
+              cpu: "500m"
+              memory: "612Mi"
+          readinessProbe:
+            tcpSocket:
+              port: 5002
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 5002
+            initialDelaySeconds: 15
+            periodSeconds: 10
+      volumes:
+        - name: bloodvol
+          persistentVolumeClaim:
+            claimName: claim2
+---
+#                                                                service for blood report 
+apiVersion: v1
+kind: Service
+metadata:
+  name: bloodsvc
+  namespace: prod
+spec:
+  selector:
+    tier: bloodapp
+  ports:
+    - port: 5002
+      protocol: TCP
+      targetPort: 5002
+--- 
+#                                                                Network Policies
+apiVersion: networking.k8s.io/v1 
+kind: NetworkPolicy 
+metadata: 
+  name: bloodnp
+  namespace: prod 
+spec: 
+ podSelector: 
+  matchLabels: 
+   tier: bloodapp 
+ policyTypes: 
+ - ingress 
+ - egress 
+ ingress: 
+  podSelector: 
+   matchLabels: 
+     tier: patreg
+---
+#                                                               autoscaling for blood report 
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpablood
+  namespace: prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: blood
+  minReplicas: 2
+  maxReplicas: 6
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80

@@ -1,0 +1,122 @@
+#                                        PersistentVolumeClaim 2 for dynamic volume provisioning
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim3
+  namespace: prod
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "500Mi"
+---
+#                                                       Deployment for urine report 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: urine
+  namespace: prod
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      tier: urineapp
+  template:
+    metadata:
+      labels:
+        tier: urineapp
+    spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 900
+        fsGroup: 2000
+      containers:
+        - name: urinecon
+          image: 
+          ports:
+            - containerPort: 5002
+          volumeMounts:
+            - name: urinevol
+              mountPath: /urinestore
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "300Mi"
+            limits:
+              cpu: "500m"
+              memory: "612Mi"
+          readinessProbe:
+            tcpSocket:
+              port: 5002
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 5003
+            initialDelaySeconds: 15
+            periodSeconds: 10
+      volumes:
+        - name: urinevol
+          persistentVolumeClaim:
+            claimName: claim3
+---
+#                                                  service for urine report  
+apiVersion: v1
+kind: Service
+metadata:
+  name: urinesvc
+  namespace: prod
+spec:
+  selector:
+    tier: urineapp
+  ports:
+    - port: 5003
+      protocol: TCP
+      targetPort: 5003
+---
+#                                                         Network Policies 
+apiVersion: networking.k8s.io/v1 
+kind: NetworkPolicy 
+metadata: 
+  name: urinenp
+  namespace: prod 
+spec: 
+ podSelector: 
+  matchLabels: 
+   tier: urineapp 
+ policyTypes: 
+ - ingress 
+ - egress 
+ ingress: 
+  podSelector: 
+   matchLabels: 
+     tier: patreg
+---
+#                                                       autoscaling for urine report 
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpaurine
+  namespace: prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: urine
+  minReplicas: 2
+  maxReplicas: 8
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
