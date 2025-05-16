@@ -31,6 +31,7 @@ CORS(app)
 # Logging setup with rotation
 logger = logging.getLogger('flask_app')
 logger.setLevel(logging.DEBUG)
+LOG_FILE = os.path.join(UPLOAD_DIR, 'app.log')
 handler = RotatingFileHandler(LOG_FILE, maxBytes=10*1024*1024, backupCount=3)
 formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(cid)s | %(message)s')
 handler.setFormatter(formatter)

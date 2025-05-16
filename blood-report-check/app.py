@@ -25,9 +25,11 @@ CORS(app)
 
 logger = logging.getLogger('BloodAnalysis')
 logger.setLevel(logging.INFO)
-handler = RotatingFileHandler('blood_analysis.log', maxBytes=int(1e6), backupCount=3)
+LOG_FILE = os.path.join(UPLOAD_DIR, 'blood_analysis.log')  
+handler = RotatingFileHandler(LOG_FILE, maxBytes=int(1e6), backupCount=3)
 handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 logger.addHandler(handler)
+
 
 @app.errorhandler(400)
 def bad_request(error):
