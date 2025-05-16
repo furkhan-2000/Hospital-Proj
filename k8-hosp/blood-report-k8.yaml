@@ -93,8 +93,8 @@ spec:
     matchLabels:
       tier: bloodapp
   policyTypes:
-    - ingress
-    - egress
+    - Ingress
+    - Egress
   ingress:
     - from:
         - podSelector:

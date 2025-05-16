@@ -93,8 +93,8 @@ spec:
     matchLabels:
       tier: urineapp
   policyTypes:
-    - ingress
-    - egress
+    - Ingress
+    - Egress
   ingress:
     - from:
         - podSelector:

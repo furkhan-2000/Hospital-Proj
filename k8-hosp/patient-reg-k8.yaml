@@ -108,8 +108,8 @@ spec:
     matchLabels:
       tier: patreg
   policyTypes:
-    - ingress
-    - egress
+    - Ingress
+    - Egress
   ingress: [] 
   egress:
     - ports:
