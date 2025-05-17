@@ -54,12 +54,13 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
 VOLUME /app/data /app/logs /app/uploads
 
 # Start Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:5003",
-     "--workers", "2",
-     "--threads", "4",
-     "--timeout", "60",
-     "--max-requests", "1000",
-     "--max-requests-jitter", "50",
-     "--access-logfile", "-",
-     "--error-logfile", "-",
-     "app:create_app()"]
+CMD gunicorn \
+    --bind 0.0.0.0:5003 \
+    --workers 2 \
+    --threads 4 \
+    --timeout 60 \
+    --max-requests 1000 \
+    --max-requests-jitter 50 \
+    --access-logfile - \
+    --error-logfile - \
+    app:create_app()
