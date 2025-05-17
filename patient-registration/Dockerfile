@@ -29,12 +29,12 @@ RUN useradd -m appuser \
     && chmod -R 755 /app \
     && chmod 700 /app/instance
 
-# Install Python dependencies as root
-COPY --chown=appuser:appuser requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
 # Switch to non-root
 USER appuser
+
+# Bring in requirements and install them into appuser’s .local
+COPY --chown=appuser:appuser requirements.txt ./
+RUN pip install --user --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY --chown=appuser:appuser . .
