@@ -40,12 +40,12 @@ spec:
         fsGroup: 2000
       containers:
         - name: bloodcon
-          image: furkhan2000/shark:blood-report
+          image: furkhan2000/shark:blood-report-check
           ports:
             - containerPort: 5002
           volumeMounts:
             - name: bloodvol
-              mountPath: /bloodstore
+              mountPath: /app/uploads 
           resources:
             requests:
               cpu: "250m"

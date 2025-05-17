@@ -40,12 +40,12 @@ spec:
         fsGroup: 2000
       containers:
         - name: urinecon
-          image: furkhan2000/shark:urine-report
+          image: furkhan2000/shark:urine-report-check
           ports:
             - containerPort: 5001
           volumeMounts:
             - name: urinevol
-              mountPath: /urinestore
+              mountPath: /app/uploads 
           resources:
             requests:
               cpu: "250m"

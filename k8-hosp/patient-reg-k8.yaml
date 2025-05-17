@@ -65,7 +65,7 @@ spec:
               memory: "512Mi"
           volumeMounts:
             - name: patregvol
-              mountPath: /patientstore
+              mountPath: /app/uploads 
           readinessProbe:
             httpGet:
               path: /health
