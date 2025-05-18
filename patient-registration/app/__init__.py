@@ -53,7 +53,7 @@ def create_app(config_class=ProductionConfig):
             app.logger.error("Failed to initialize database: %s", e)
             raise
 
-    # Security headers
+    # Security headers (CSP expanded for AOS and fonts)
     Talisman(
         app,
         force_https=False,
@@ -61,11 +61,12 @@ def create_app(config_class=ProductionConfig):
         session_cookie_secure=False,
         content_security_policy={
             'default-src': "'self'",
-            'script-src': "'self' 'unsafe-inline' https://code.jquery.com",
-            'style-src': "'self' 'unsafe-inline' https://cdnjs.cloudflare.com",
+            'script-src': "'self' 'unsafe-inline' https://code.jquery.com https://unpkg.com",
+            'style-src': "'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com",
             'img-src': "'self' data:",
             'media-src': "'self'",
-            'frame-src': "'self' https://www.google.com"
+            'frame-src': "'self' https://www.google.com",
+            'font-src': "'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com"
         }
     )
 
