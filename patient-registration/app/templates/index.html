@@ -14,10 +14,10 @@
     <svg width="0" height="0">
         <defs>
             <clipPath id="custom-shape" clipPathUnits="objectBoundingBox">
-                <path d="M0.05,0.1 Q 0.15,0 0.85,0 0.95,0.1 1,0.3 0.9,0.5 1,0.7 0.95,0.9 0.85,1 0.15,1 0.05,0.9 0,0.7 0.1,0.5 0,0.3 Z" />
+                <path d="M0.05 0.1 Q 0.15 0 0.85 0 Q 0.95 0.1 1 0.3 Q 0.9 0.5 1 0.7 Q 0.95 0.9 0.85 1 Q 0.15 1 0.05 0.9 Q 0 0.7 0.1 0.5 Q 0 0.3 0.05 0.1 Z" />
             </clipPath>
             <clipPath id="amoeba-shape" clipPathUnits="objectBoundingBox">
-                <path d="M0.1,0.2 Q0.05,0.05 0.3,0.1 Q0.5,0.15 0.7,0.1 Q0.9,0.05 0.95,0.3 Q1,0.5 0.9,0.7 Q0.8,0.9 0.6,0.95 Q0.4,1 0.2,0.9 Q0.05,0.8 0.1,0.6 Q0.15,0.4 0.1,0.2 Z" />
+                <path d="M0.1 0.2 Q 0.05 0.05 0.3 0.1 Q 0.5 0.15 0.7 0.1 Q 0.9 0.05 0.95 0.3 Q 1 0.5 0.9 0.7 Q 0.8 0.9 0.6 0.95 Q 0.4 1 0.2 0.9 Q 0.05 0.8 0.1 0.6 Q 0.15 0.4 0.1 0.2 Z" />
             </clipPath>
         </defs>
     </svg>
@@ -47,7 +47,7 @@
                 <h1>Al Riyadh Vantage Hospital</h1>
                 <p>Where Precision Meets Compassion</p>
                 <video id="overlayVideo" class="overlay-video" autoplay muted loop preload="auto">
-                    <source src="/static/assets/videos/hero.mp4" type="video/mp4">
+                    <source src="{{ url_for('static', filename='assets/videos/hero.mp4') }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -62,37 +62,37 @@
         </div>
         <div class="slider" id="serviceSlider">
             <div class="slide active">
-                <img src="/static/assets/images/emergency.jpg" alt="Emergency Services">
+                <img src="{{ url_for('static', filename='assets/images/emergency.jpg') }}" alt="Emergency Services">
                 <h3>Emergency Services</h3>
                 <p>Level 1 Trauma Center, Emergency Department, Stroke Center, Cardiac Catheterization Lab, Pediatric Emergency Services.</p>
             </div>
             <div class="slide">
-                <img src="/static/assets/images/inpatient.jpg" alt="Inpatient Services">
+                <img src="{{ url_for('static', filename='assets/images/inpatient.jpg') }}" alt="Inpatient Services">
                 <h3>Inpatient Services</h3>
                 <p>Medical/Surgical Units, Intensive Care Unit (ICU), Neonatal ICU (NICU), Cardiology, Oncology, Orthopedics, Neurology/Neurosurgery, Obstetrics/Gynecology.</p>
             </div>
             <div class="slide">
-                <img src="/static/assets/images/outpatient.jpg" alt="Outpatient Services">
+                <img src="{{ url_for('static', filename='assets/images/outpatient.jpg') }}" alt="Outpatient Services">
                 <h3>Outpatient Services</h3>
                 <p>Ambulatory Surgery Center, Dialysis Center, Infusion Center, Wound Care Clinic, Pain Management Clinic.</p>
             </div>
             <div class="slide">
-                <img src="/static/assets/images/diagnostic.jpg" alt="Diagnostic Services">
+                <img src="{{ url_for('static', filename='assets/images/diagnostic.jpg') }}" alt="Diagnostic Services">
                 <h3>Diagnostic Services</h3>
                 <p>Radiology, Laboratory Services, Pathology, Cardiac Testing, Neurodiagnostics, Endoscopy.</p>
             </div>
             <div class="slide">
-                <img src="/static/assets/images/surgical.jpg" alt="Surgical Services">
+                <img src="{{ url_for('static', filename='assets/images/surgical.jpg') }}" alt="Surgical Services">
                 <h3>Surgical Services</h3>
                 <p>General Surgery, Robotic Surgery, Cardiothoracic Surgery, Neurosurgery, Orthopedic Surgery, Transplant Surgery, Vascular Surgery, Bariatric Surgery.</p>
             </div>
             <div class="slide">
-                <img src="/static/assets/images/specialized.jpg" alt="Specialized Programs">
+                <img src="{{ url_for('static', filename='assets/images/specialized.jpg') }}" alt="Specialized Programs">
                 <h3>Specialized Programs</h3>
                 <p>Cancer Center, Heart and Vascular Institute, Stroke Program, Orthopedic Institute, Women’s Health Center, Pediatric Center, Behavioral Health.</p>
             </div>
             <div class="slide">
-                <img src="/static/assets/images/administrative.jpg" alt="Administrative & Community Services">
+                <img src="{{ url_for('static', filename='assets/images/administrative.jpg') }}" alt="Administrative & Community Services">
                 <h3>Administrative & Community Services</h3>
                 <p>Medical Records, Billing and Financial Services, Quality and Safety, Community Outreach, Volunteer Services, Care Closet.</p>
             </div>
@@ -107,7 +107,7 @@
             <div class="specialist-slide active">
                 <div class="img-wrapper">
                     <div class="img-container">
-                        <img src="/static/assets/images/specialist1.jpg" alt="Dr. Noor Ansari">
+                        <img src="{{ url_for('static', filename='assets/images/specialist1.jpg') }}" alt="Dr. Noor Ansari">
                     </div>
                 </div>
                 <h3>Dr. Noor Ansari</h3>
@@ -117,7 +117,7 @@
             <div class="specialist-slide">
                 <div class="img-wrapper">
                     <div class="img-container">
-                        <img src="/static/assets/images/specialist2.jpg" alt="Dr. Baseer Ansari">
+                        <img src="{{ url_for('static', filename='assets/images/specialist2.jpg') }}" alt="Dr. Baseer Ansari">
                     </div>
                 </div>
                 <h3>Dr. Baseer Ansari</h3>
@@ -127,7 +127,7 @@
             <div class="specialist-slide">
                 <div class="img-wrapper">
                     <div class="img-container">
-                        <img src="/static/assets/images/specialist3.jpg" alt="Dr. Saba Qaamr">
+                        <img src="{{ url_for('static', filename='assets/images/specialist3.jpg') }}" alt="Dr. Saba Qaamr">
                     </div>
                 </div>
                 <h3>Dr. Saba Qaamr</h3>
@@ -137,7 +137,7 @@
             <div class="specialist-slide">
                 <div class="img-wrapper">
                     <div class="img-container">
-                        <img src="/static/assets/images/specialist4.jpg" alt="Dr. Ruba Ansari">
+                        <img src="{{ url_for('static', filename='assets/images/specialist4.jpg') }}" alt="Dr. Ruba Ansari">
                     </div>
                 </div>
                 <h3>Dr. Ruba Ansari</h3>
@@ -148,12 +148,12 @@
             <div class="specialist-slide">
                 <div class="img-wrapper">
                     <div class="img-container">
-                        <img src="/static/assets/images/specialist5.jpg" alt="Dr. Rasha Mariyam">
+                        <img src="{{ url_for('static', filename='assets/images/specialist5.jpg') }}" alt="Dr. Rasha Mariyam">
                     </div>
                 </div>
                 <h3>Dr. Rasha Mariyam</h3>
                 <h4>Plastic Surgeon</h4>
-                <p>Dr. Rasha Mariyam is an Ivy League-educated, board-certified plastic surgeon with 20+ years’ expertise, trained at top-tier US institutions. Internationally recognized for pioneering contributions to aesthetic and reconstructive surgery, she merges advanced techniques with academic rigor. Honored with prestigious awards and peer accolades, her practice epitomizes safety, artistry, and transformative, natural results for global clientele.</p>
+                <p>Dr. Rasha Mariyam is an Ivy League-educated، board-certified plastic surgeon with 20+ years’ expertise، trained at top-tier US institutions. Internationally recognized for pioneering contributions to aesthetic and reconstructive surgery، she merges advanced techniques with academic rigor. Honored with prestigious awards and peer accolades، her practice epitomizes safety، artistry، and transformative، natural results for global clientele.</p>
             </div>
         </div>
     </section>
@@ -164,37 +164,37 @@
         <div class="tour-slider" id="tourSlider">
             <div class="tour-slide active">
                 <div class="img-container">
-                    <img src="/static/assets/images/tour1.jpg" alt="Hospital Image 1">
+                    <img src="{{ url_for('static', filename='assets/images/tour1.jpg') }}" alt="Hospital Image 1">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="/static/assets/images/tour2.jpg" alt="Hospital Image 2">
+                    <img src="{{ url_for('static', filename='assets/images/tour2.jpg') }}" alt="Hospital Image 2">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="/static/assets/images/tour3.jpg" alt="Hospital Image 3">
+                    <img src="{{ url_for('static', filename='assets/images/tour3.jpg') }}" alt="Hospital Image 3">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="/static/assets/images/tour4.jpg" alt="Hospital Image 4">
+                    <img src="{{ url_for('static', filename='assets/images/tour4.jpg') }}" alt="Hospital Image 4">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="/static/assets/images/tour5.jpg" alt="Hospital Image 5">
+                    <img src="{{ url_for('static', filename='assets/images/tour5.jpg') }}" alt="Hospital Image 5">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="/static/assets/images/tour6.jpg" alt="Hospital Image 6">
+                    <img src="{{ url_for('static', filename='assets/images/tour6.jpg') }}" alt="Hospital Image 6">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="/static/assets/images/tour7.jpg" alt="Hospital Image 7">
+                    <img src="{{ url_for('static', filename='assets/images/tour7.jpg') }}" alt="Hospital Image 7">
                 </div>
             </div>
         </div>
@@ -205,11 +205,11 @@
         <h2>Report Analyzer</h2>
         <div class="report-services">
             <div class="service-box">
-                <img src="/static/assets/images/urinsights.jpg" alt="UrInsights">
+                <img src="{{ url_for('static', filename='assets/images/urinsights.jpg') }}" alt="UrInsights">
                 <h3>UrInsights</h3>
             </div>
             <div class="service-box">
-                <img src="/static/assets/images/bloodinsights.jpg" alt="BloodInsights">
+                <img src="{{ url_for('static', filename='assets/images/bloodinsights.jpg') }}" alt="BloodInsights">
                 <h3>BloodInsights</h3>
             </div>
         </div>
@@ -234,7 +234,7 @@
             <label for="phone">Phone Number</label>
             <input id="phone" type="tel" placeholder="e.g. +966551234567" required>
             <label for="email">Email</label>
-            <input id="email" type="email" placeholder="e.g. you@example.com" required>
+            <input id="email" type="email" placeholder="e.g. you@example.com" required workplace
             <label for="description">Description</label>
             <textarea id="description" placeholder="Brief medical history..."></textarea>
             <button type="submit">Book Consultation</button>
@@ -246,7 +246,7 @@
                 <p><strong>Emergency Services</strong>: Available 24/7</p>
             </div>
             <div class="map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.987672345678!2d46.71675431509876!3d24.727525984123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDQzJzQxLjEiTiA0NsKwNDIuNzcrViA!5e0!3m2!1sen!2sus!4v1634567890123!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.9876723456!2d46.71675431509876!3d24.727525984123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDQzJzQxLjEiTiA0NsKwNDIuNzcrViA!5e0!3m2!1sen!2sus!4v1634567890123!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
         <div id="toastContainer"></div>
@@ -257,19 +257,16 @@
         <div class="footer-wrapper">
             <div class="footer-logo">
                 <!-- Hospital logo remains unchanged -->
-                <img src="/static/assets/images/new_logo.png" alt="Al Riyadh Vantage Hospital Logo">
+                <img src="{{ url_for('static', filename='assets/images/new_logo.png') }}" alt="Al Riyadh Vantage Hospital Logo">
             </div>
             <div class="footer-content">
                 <p>Location: Al Riyadh Vantage Hospital, Al Rawabi, Riyadh 12271, KSA</p>
                 <div class="social-icons">
-                    </a>
                     <a href="https://www.facebook.com/AlRiyadhVantage" target="_blank" aria-label="Facebook">
-                        <img src="/static/assets/images/social-facebook.png" alt="Facebook Icon">
+                        <img src="{{ url_for('static', filename='assets/images/social-facebook.png') }}" alt="Facebook Icon">
                     </a>
-
                     <a href="https://www.twitter.com/AlRiyadhVantage" target="_blank" aria-label="Twitter">
-                        <img src="/static/assets/images/social-twitter.png" alt="Twitter Icon">
-                    </a>
+                        <img src="{{ url_for('static', filename='assets/images/social-twitter.png') }}" alt="Twitter Icon">
                     </a>
                 </div>
                 <p> © 2025 Al Riyadh Vantage Hospital. All Rights Reserved | Aligned with Saudi Vision 2030 <br>
