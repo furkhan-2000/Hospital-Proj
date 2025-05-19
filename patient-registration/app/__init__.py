@@ -1,3 +1,5 @@
+# app/__init__.py
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -19,8 +21,15 @@ from app.core.models import Patient  # Ensure Patient model is registered
 migrate = Migrate()
 
 def create_app(config_class=ProductionConfig):
-    # Initialize Flask
-    app = Flask(__name__, static_folder="static", template_folder="templates")
+    # Initialize Flask, serve static at root
+    app = Flask(
+        __name__,
+        static_folder="static",
+        static_url_path="",        # serve /style.css → app/static/style.css
+        template_folder="templates"
+    )
+
+    # Load the correct config class
     app.config.from_object(config_class)
     config_class.init_app(app)
 
@@ -42,7 +51,7 @@ def create_app(config_class=ProductionConfig):
     CORS(app)
     limiter.init_app(app)
 
-    # Initialize database: create tables and verify connectivity
+    # Initialize database
     with app.app_context():
         try:
             db.create_all()
@@ -53,7 +62,7 @@ def create_app(config_class=ProductionConfig):
             app.logger.error("Failed to initialize database: %s", e)
             raise
 
-    # Security headers (CSP expanded for AOS and fonts)
+    # Security headers
     Talisman(
         app,
         force_https=False,
@@ -70,11 +79,11 @@ def create_app(config_class=ProductionConfig):
         }
     )
 
-    # Register API blueprint under /api
+    # Register blueprint
     from app.core import bp as core_blueprint
     app.register_blueprint(core_blueprint, url_prefix="/api")
 
-    # SPA catch-all: serve index.html for any non-API path
+    # SPA catch-all
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
     def serve_ui(path):
@@ -84,5 +93,13 @@ def create_app(config_class=ProductionConfig):
 
     # Register error handlers
     register_error_handlers(app)
+
+    # Log mail initialization errors
+    try:
+        with app.app_context():
+            _ = mail.connection
+        app.logger.info("Mail extension initialized")
+    except Exception as me:
+        app.logger.error("Mail failed to initialize: %s", me)
 
     return app
