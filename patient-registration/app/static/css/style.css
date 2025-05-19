@@ -93,7 +93,7 @@ header .menu-toggle {
     position: relative;
     width: 100%;
     min-height: 100vh; /* Ensure full viewport height */
-    background: url('/static/assets/images/doctor.jpg') center/cover no-repeat;
+    background: url('/assets/images/doctor.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
