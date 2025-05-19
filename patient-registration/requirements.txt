@@ -19,4 +19,3 @@ flask-limiter==3.7.0
 bleach==6.1.0
 pydantic==2.7.1
 pydantic-settings==2.2.1
-
