@@ -1,4 +1,27 @@
-#                                              PriorityClass for Patient Registration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: patient-reg-config
+  namespace: prod
+data:
+  MAIL_SERVER: "smtp.gmail.com"
+  MAIL_PORT: "465"
+  MAIL_USE_TLS: "false"
+  MAIL_USE_SSL: "true"
+  ADMIN_EMAIL: "mehdifurkhan00@gmail.com"
+  SQLALCHEMY_DATABASE_URI: "sqlite:////app/data/site.db"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: patient-reg-secret
+  namespace: prod
+data:
+  SECRET_KEY: "NWRlMjNmMTMxNzU1Njg3MzQyMjMxYmQzMzdlMTBhODMwYzRkYTIwYmNiMTVhOTBkNjNmODk4MmFjNmZhNzRmYw=="
+  MAIL_USERNAME: "bWVoZGlmdXJraGFuMDAzQGdtYWlsLmNvbQ=="
+  MAIL_PASSWORD: "b3JwZiBvcWVxIGZ4emggYWt3cw=="
+---
+# PriorityClass for Patient Registration
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
@@ -7,7 +30,7 @@ value: 100000
 globalDefault: false
 description: "Priority class for Patient Registration"
 ---
-#                                                     Deployment for the patient registration application
+# Deployment for the patient registration application
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,7 +44,7 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
-      maxUnavailable: 0 
+      maxUnavailable: 0
   selector:
     matchLabels:
       tier: patreg
@@ -31,7 +54,7 @@ spec:
         tier: patreg
     spec:
       priorityClassName: patregpc
-      terminationGracePeriodSeconds: 30 
+      terminationGracePeriodSeconds: 30
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -39,9 +62,14 @@ spec:
       containers:
         - name: patregcon
           image: furkhan2000/shark:patient-reg
-          imagePullPolicy: Always 
+          imagePullPolicy: Always
           ports:
             - containerPort: 5003
+          envFrom:
+            - configMapRef:
+                name: patient-reg-config
+            - secretRef:
+                name: patient-reg-secret
           resources:
             requests:
               cpu: "250m"
@@ -62,7 +90,7 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 10
 ---
-#                                                            Service
+# Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -76,7 +104,7 @@ spec:
       targetPort: 5003
       protocol: TCP
 ---
-#                                                                 Network policy
+# Network policy
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -89,15 +117,21 @@ spec:
   policyTypes:
     - Ingress
     - Egress
-  ingress: [] 
+  ingress: []
   egress:
     - ports:
         - protocol: TCP
           port: 5002
         - protocol: TCP
           port: 5001
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+      ports:
+        - protocol: TCP
+          port: 465
 ---
-#                                                                 HorizontalPodAutoscaler
+# HorizontalPodAutoscaler
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -116,6 +150,4 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 80 
-
-
+          averageUtilization: 80
