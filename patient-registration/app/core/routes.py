@@ -1,11 +1,12 @@
+# app/core/routes.py
 from flask import request, jsonify, current_app, render_template
 from datetime import datetime
 import structlog
 from email_validator import validate_email as validate_email_address
 from bleach import clean
-
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy import text                     # ← NEW IMPORT
+from sqlalchemy import text
+
 from app.extensions import db, limiter, mail
 from flask_mail import Message
 
@@ -26,7 +27,7 @@ def create_patient():
         # Validate email format
         validate_email_address(data["email"], check_deliverability=False)
 
-        # Build Patient object
+        # Build Patient object with sanitized inputs
         patient = Patient(
             first_name    = clean(data["first_name"], strip=True),
             last_name     = clean(data["last_name"], strip=True),
@@ -45,11 +46,11 @@ def create_patient():
                     patient_id=patient.id)
 
         # Send styled HTML email
-        doctor_addr = current_app.config["ADMIN_EMAIL"]
+        doctor_addr = current_app.config.get("ADMIN_EMAIL")
         msg = Message(
             subject="New Patient Registration",
-            sender=current_app.config["MAIL_USERNAME"],
-            recipients=[doctor_addr]
+            sender=current_app.config.get("MAIL_USERNAME"),
+            recipients=[doctor_addr] if doctor_addr else []
         )
         msg.html = render_template("patient_email.html", patient=patient)
         mail.send(msg)
@@ -67,11 +68,11 @@ def create_patient():
         logger.error("Patient creation failed", error=str(e))
         return jsonify({"error": str(e)}), 400
 
+
 @bp.route("/health", methods=["GET"])
 def health():
     try:
-        # Wrap the raw SQL in text(), otherwise SQLAlchemy 2.x rejects bare strings
-        db.session.execute(text("SELECT 1"))      # ← UPDATED LINE
+        db.session.execute(text("SELECT 1"))  # SQL-safe with SQLAlchemy 2.x
         return jsonify({
             "status": "healthy",
             "database": "connected"
