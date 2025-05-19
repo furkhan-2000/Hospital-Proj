@@ -1,4 +1,3 @@
-# app/core/routes.py
 from flask import request, jsonify, current_app, render_template
 from datetime import datetime
 import structlog
