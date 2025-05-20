@@ -85,12 +85,16 @@ const specialistSlides = document.querySelectorAll('.specialist-slide');
 let specialistIdx = 0;
 
 function showSpecialistSlide(i) {
-    specialistSlides[specialistIdx].classList.remove('active');
+    specialistSlides.forEach(slide => {
+        slide.classList.remove('active');
+        slide.style.opacity = '0';
+    });
     specialistIdx = i;
     specialistSlides[specialistIdx].classList.add('active');
+    specialistSlides[specialistIdx].style.opacity = '1';
 }
 
-setInterval(() => showSpecialistSlide((specialistIdx + 1) % specialistSlides.length), 6000);
+setInterval(() => showSpecialistSlide((specialistIdx + 1) % specialistSlides.length), 5000);
 
 // Visual Tour Slider
 const tourSlides = document.querySelectorAll('.tour-slide');
