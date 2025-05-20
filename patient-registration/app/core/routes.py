@@ -66,16 +66,3 @@ def create_patient():
         db.session.rollback()
         logger.error("Patient creation failed", error=str(e))
         return jsonify({"error": str(e)}), 400
-
-
-@bp.route("/health", methods=["GET"])
-def health():
-    try:
-        db.session.execute(text("SELECT 1"))  # SQL-safe with SQLAlchemy 2.x
-        return jsonify({
-            "status": "healthy",
-            "database": "connected"
-        }), 200
-    except Exception as e:
-        logger.error("Health check failed", error=str(e))
-        return jsonify({"status": "unhealthy", "error": str(e)}), 500
