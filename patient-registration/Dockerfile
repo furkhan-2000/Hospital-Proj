@@ -7,7 +7,7 @@ ENV PATH="/home/appuser/.local/bin:${PATH}" \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     FLASK_APP=app \
-    FLASK_ENV=production \
+    FLASK_ENV=development \
     TMPDIR=/app/tmp \
     AUDIT_LOG_FILE=/app/logs/audit.log \
     PATIENT_DATA_DIR=/app/data/patient_data
@@ -32,25 +32,17 @@ RUN useradd -m appuser \
 USER appuser
 
 COPY --chown=appuser:appuser requirements.txt ./
+
 RUN pip install --user --no-cache-dir -r requirements.txt
 
 COPY --chown=appuser:appuser . .
 
-RUN chmod +x download_assets.sh && ./download_assets.sh
-
 EXPOSE 5003
+
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:5003/health || exit 1
 
 VOLUME /app/data /app/logs /app/uploads
 
-CMD ["/home/appuser/.local/bin/gunicorn", \
-  "--bind", "0.0.0.0:5003", \
-  "--workers", "2", \
-  "--user", "appuser", \
-  "--group", "appuser", \
-  "--worker-tmp-dir", "/app/tmp", \
-  "--timeout", "60", \
-  "--access-logfile", "-", \
-  "--error-logfile", "-", \
-  "app:create_app()"]
+
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5003"]
