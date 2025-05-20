@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from flask_mail import Mail
 from flask_cors import CORS
 from flask_talisman import Talisman
@@ -80,6 +80,19 @@ def create_app(config_class=ProductionConfig):
     # Register blueprint
     from app.core import bp as core_blueprint
     app.register_blueprint(core_blueprint, url_prefix="/api")
+
+    # Root level health check for Kubernetes
+    @app.route('/health')
+    def health():
+        try:
+            db.session.execute(text("SELECT 1"))
+            return jsonify({
+                "status": "healthy",
+                "database": "connected"
+            }), 200
+        except Exception as e:
+            app.logger.error("Health check failed", error=str(e))
+            return jsonify({"status": "unhealthy", "error": str(e)}), 500
 
     # SPA catch-all
     @app.route('/', defaults={'path': ''})
