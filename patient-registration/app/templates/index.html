@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Al Riyadh Vantage Hospital</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- AOS CSS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body>
-    <!-- SVG Definition for Custom Shape -->
     <svg width="0" height="0">
         <defs>
             <clipPath id="custom-shape" clipPathUnits="objectBoundingBox">
@@ -22,14 +20,12 @@
         </defs>
     </svg>
 
-    <!-- Header with Hamburger Menu (Placed at Top Center) -->
     <header>
         <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
             <i class="fas fa-bars"></i>
         </button>
     </header>
 
-    <!-- Sidebar Navigation for Hamburger Menu -->
     <nav id="sidebar-menu" class="sidebar-menu">
         <ul>
             <li><a href="#hero">Home</a></li>
@@ -39,7 +35,6 @@
         </ul>
     </nav>
 
-    <!-- Hero Section with Original Content -->
     <section id="hero" class="hero">
         <div class="hero-overlay"></div>
         <div class="container">
@@ -47,14 +42,13 @@
                 <h1>Al Riyadh Vantage Hospital</h1>
                 <p>Where Precision Meets Compassion</p>
                 <video id="overlayVideo" class="overlay-video" autoplay muted loop preload="auto">
-                    <source src="{{ url_for('static', filename='assets/videos/hero.mp4') }}" type="video/mp4">
+                    <source src="https://cdn.pixabay.com/video/2022/10/07/133898-758336558_large.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
         </div>
     </section>
 
-    <!-- Compassionate Care -->
     <section id="compassion" class="compassion" data-aos="fade-up" data-aos-delay="100">
         <div class="text">
             <h2>Compassionate Care</h2>
@@ -62,37 +56,37 @@
         </div>
         <div class="slider" id="serviceSlider">
             <div class="slide active">
-                <img src="{{ url_for('static', filename='assets/images/emergency.jpg') }}" alt="Emergency Services">
+                <img src="https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg" alt="Emergency Services">
                 <h3>Emergency Services</h3>
                 <p>Level 1 Trauma Center, Emergency Department, Stroke Center, Cardiac Catheterization Lab, Pediatric Emergency Services.</p>
             </div>
             <div class="slide">
-                <img src="{{ url_for('static', filename='assets/images/inpatient.jpg') }}" alt="Inpatient Services">
+                <img src="https://images.pexels.com/photos/263402/pexels-photo-263402.jpeg" alt="Inpatient Services">
                 <h3>Inpatient Services</h3>
                 <p>Medical/Surgical Units, Intensive Care Unit (ICU), Neonatal ICU (NICU), Cardiology, Oncology, Orthopedics, Neurology/Neurosurgery, Obstetrics/Gynecology.</p>
             </div>
             <div class="slide">
-                <img src="{{ url_for('static', filename='assets/images/outpatient.jpg') }}" alt="Outpatient Services">
+                <img src="https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg" alt="Outpatient Services">
                 <h3>Outpatient Services</h3>
                 <p>Ambulatory Surgery Center, Dialysis Center, Infusion Center, Wound Care Clinic, Pain Management Clinic.</p>
             </div>
             <div class="slide">
-                <img src="{{ url_for('static', filename='assets/images/diagnostic.jpg') }}" alt="Diagnostic Services">
+                <img src="https://images.pexels.com/photos/305568/pexels-photo-305568.jpeg" alt="Diagnostic Services">
                 <h3>Diagnostic Services</h3>
                 <p>Radiology, Laboratory Services, Pathology, Cardiac Testing, Neurodiagnostics, Endoscopy.</p>
             </div>
             <div class="slide">
-                <img src="{{ url_for('static', filename='assets/images/surgical.jpg') }}" alt="Surgical Services">
+                <img src="https://images.pexels.com/photos/7659573/pexels-photo-7659573.jpeg" alt="Surgical Services">
                 <h3>Surgical Services</h3>
                 <p>General Surgery, Robotic Surgery, Cardiothoracic Surgery, Neurosurgery, Orthopedic Surgery, Transplant Surgery, Vascular Surgery, Bariatric Surgery.</p>
             </div>
             <div class="slide">
-                <img src="{{ url_for('static', filename='assets/images/specialized.jpg') }}" alt="Specialized Programs">
+                <img src="https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg" alt="Specialized Programs">
                 <h3>Specialized Programs</h3>
                 <p>Cancer Center, Heart and Vascular Institute, Stroke Program, Orthopedic Institute, Women’s Health Center, Pediatric Center, Behavioral Health.</p>
             </div>
             <div class="slide">
-                <img src="{{ url_for('static', filename='assets/images/administrative.jpg') }}" alt="Administrative & Community Services">
+                <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg" alt="Administrative & Community Services">
                 <h3>Administrative & Community Services</h3>
                 <p>Medical Records, Billing and Financial Services, Quality and Safety, Community Outreach, Volunteer Services, Care Closet.</p>
             </div>
@@ -100,14 +94,13 @@
         <div class="slider-nav" id="sliderNav"></div>
     </section>
 
-    <!-- Our Specialists -->
     <section id="specialists" class="specialists" data-aos="fade-up" data-aos-delay="200">
         <h2>Our Specialists</h2>
         <div class="specialist-slider" id="specialistSlider">
             <div class="specialist-slide active">
                 <div class="img-wrapper">
                     <div class="img-container">
-                        <img src="{{ url_for('static', filename='assets/images/specialist1.jpg') }}" alt="Dr. Noor Ansari">
+                        <img src="https://www.img2link.com/images/2025/05/12/0ba6729c25207d75a9e3793cb8cb7c1f.jpg" alt="Dr. Noor Ansari">
                     </div>
                 </div>
                 <h3>Dr. Noor Ansari</h3>
@@ -117,7 +110,7 @@
             <div class="specialist-slide">
                 <div class="img-wrapper">
                     <div class="img-container">
-                        <img src="{{ url_for('static', filename='assets/images/specialist2.jpg') }}" alt="Dr. Baseer Ansari">
+                        <img src="https://www.img2link.com/images/2025/05/12/252ac2d3310eb9e30d851045cf75b2ec.jpg" alt="Dr. Baseer Ansari">
                     </div>
                 </div>
                 <h3>Dr. Baseer Ansari</h3>
@@ -127,7 +120,7 @@
             <div class="specialist-slide">
                 <div class="img-wrapper">
                     <div class="img-container">
-                        <img src="{{ url_for('static', filename='assets/images/specialist3.jpg') }}" alt="Dr. Saba Qaamr">
+                        <img src="https://www.img2link.com/images/2025/05/12/eada5219e288d5d860c3edea55903b61.jpg" alt="Dr. Saba Qaamr">
                     </div>
                 </div>
                 <h3>Dr. Saba Qaamr</h3>
@@ -137,18 +130,17 @@
             <div class="specialist-slide">
                 <div class="img-wrapper">
                     <div class="img-container">
-                        <img src="{{ url_for('static', filename='assets/images/specialist4.jpg') }}" alt="Dr. Ruba Ansari">
+                        <img src="https://www.img2link.com/images/2025/05/12/f5182d714a51788c380e2f870f0e9442.jpg" alt="Dr. Ruba Ansari">
                     </div>
                 </div>
                 <h3>Dr. Ruba Ansari</h3>
                 <h4>Lead Neurosurgeon, Al Riyadh Vantage Hospital</h4>
                 <p>Harvard & Johns Hopkins-trained, dual US/Saudi board-certified neurosurgeon. Spearheads AI-driven spinal/neuro-oncology innovation at Riyadh’s flagship Vision 2030 hospital. Credited with pioneering robotic protocols (50%+ faster recovery). King Salman Award honoree; architect of Saudi’s first tele-neurosurgery network.</p>
             </div>
-            <!-- New Specialist Slide -->
             <div class="specialist-slide">
                 <div class="img-wrapper">
                     <div class="img-container">
-                        <img src="{{ url_for('static', filename='assets/images/specialist5.jpg') }}" alt="Dr. Rasha Mariyam">
+                        <img src="https://www.img2link.com/images/2025/05/12/6bb1058cd477b7e13bef4e6f9fbed4fb.jpg" alt="Dr. Rasha Mariyam">
                     </div>
                 </div>
                 <h3>Dr. Rasha Mariyam</h3>
@@ -158,64 +150,61 @@
         </div>
     </section>
 
-    <!-- Visual Tour -->
     <section id="visual-tour" class="visual-tour" data-aos="fade-up" data-aos-delay="300">
         <h2>Visual Tour</h2>
         <div class="tour-slider" id="tourSlider">
             <div class="tour-slide active">
                 <div class="img-container">
-                    <img src="{{ url_for('static', filename='assets/images/tour1.jpg') }}" alt="Hospital Image 1">
+                    <img src="https://www.img2link.com/images/2025/05/12/7cfe7ba67538acf0c55abe99584aae67.jpg" alt="Hospital Image 1">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="{{ url_for('static', filename='assets/images/tour2.jpg') }}" alt="Hospital Image 2">
+                    <img src="https://www.img2link.com/images/2025/05/12/c25140202319c1c028210b7fcbabeaa0.jpg" alt="Hospital Image 2">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="{{ url_for('static', filename='assets/images/tour3.jpg') }}" alt="Hospital Image 3">
+                    <img src="https://www.img2link.com/images/2025/05/12/aec773bc92639dc8560fd7ad01b44268.jpg" alt="Hospital Image 3">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="{{ url_for('static', filename='assets/images/tour4.jpg') }}" alt="Hospital Image 4">
+                    <img src="https://www.img2link.com/images/2025/05/12/bdce68d559786ecc740c0628f63c5b33.jpg" alt="Hospital Image 4">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="{{ url_for('static', filename='assets/images/tour5.jpg') }}" alt="Hospital Image 5">
+                    <img src="https://www.img2link.com/images/2025/05/12/25db0482dbc3dcf662c3d86ae94d07ee.jpg" alt="Hospital Image 5">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="{{ url_for('static', filename='assets/images/tour6.jpg') }}" alt="Hospital Image 6">
+                    <img src="https://www.img2link.com/images/2025/05/12/2feadc62f0a829a01534672f6318101a.jpg" alt="Hospital Image 6">
                 </div>
             </div>
             <div class="tour-slide">
                 <div class="img-container">
-                    <img src="{{ url_for('static', filename='assets/images/tour7.jpg') }}" alt="Hospital Image 7">
+                    <img src="https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg" alt="Hospital Image 7">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Report Analyzer -->
     <section id="report-analyzer" class="report-analyzer" data-aos="fade-up" data-aos-delay="400">
         <h2>Report Analyzer</h2>
         <div class="report-services">
             <div class="service-box">
-                <img src="{{ url_for('static', filename='assets/images/urinsights.jpg') }}" alt="UrInsights">
+                <img src="https://img.freepik.com/free-photo/lab-doctor-performing-medical-exam-urine_23-2149372021.jpg" alt="UrInsights">
                 <h3>UrInsights</h3>
             </div>
             <div class="service-box">
-                <img src="{{ url_for('static', filename='assets/images/bloodinsights.jpg') }}" alt="BloodInsights">
+                <img src="https://img.freepik.com/free-photo/coronavirus-blood-samples-arrangement-lab_23-2149107259.jpg" alt="BloodInsights">
                 <h3>BloodInsights</h3>
             </div>
         </div>
     </section>
 
-    <!-- Consultation Booking -->
     <section id="booking" class="booking" data-aos="fade-up" data-aos-delay="500">
         <form id="patientForm">
             <label for="firstName">First Name</label>
@@ -234,7 +223,7 @@
             <label for="phone">Phone Number</label>
             <input id="phone" type="tel" placeholder="e.g. +966551234567" required>
             <label for="email">Email</label>
-            <input id="email" type="email" placeholder="e.g. you@example.com" required workplace
+            <input id="email" type="email" placeholder="e.g. you@example.com" required>
             <label for="description">Description</label>
             <textarea id="description" placeholder="Brief medical history..."></textarea>
             <button type="submit">Book Consultation</button>
@@ -252,21 +241,19 @@
         <div id="toastContainer"></div>
     </section>
 
-    <!-- Footer -->
     <footer id="footer">
         <div class="footer-wrapper">
             <div class="footer-logo">
-                <!-- Hospital logo remains unchanged -->
-                <img src="{{ url_for('static', filename='assets/images/new_logo.png') }}" alt="Al Riyadh Vantage Hospital Logo">
+                <img src="https://www.img2link.com/images/2025/05/11/75f87338d4ea408c849434f3150c7fd8.png" alt="Al Riyadh Vantage Hospital Logo">
             </div>
             <div class="footer-content">
                 <p>Location: Al Riyadh Vantage Hospital, Al Rawabi, Riyadh 12271, KSA</p>
                 <div class="social-icons">
-                    <a href="https://www.facebook.com/AlRiyadhVantage" target="_blank" aria-label="Facebook">
-                        <img src="{{ url_for('static', filename='assets/images/social-facebook.png') }}" alt="Facebook Icon">
-                    </a>
                     <a href="https://www.twitter.com/AlRiyadhVantage" target="_blank" aria-label="Twitter">
-                        <img src="{{ url_for('static', filename='assets/images/social-twitter.png') }}" alt="Twitter Icon">
+                        <img src="https://www.img2link.com/images/2025/05/13/0c86b4750c65a560e1684aa369dc6b44.png" alt="Twitter Icon">
+                    </a>
+                    <a href="https://www.linkedin.com" target="_blank" aria-label="LinkedIn">
+                        <img src="https://www.img2link.com/images/2025/05/13/067147b2aeb3f1af21948b2f486b2fbc.png" alt="LinkedIn Icon">
                     </a>
                 </div>
                 <p> © 2025 Al Riyadh Vantage Hospital. All Rights Reserved | Aligned with Saudi Vision 2030 <br>
@@ -276,14 +263,13 @@
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <!-- AOS JS -->
+    <script src="/js/main.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init({
-            duration: 800, // Animation duration in milliseconds
-            once: true,    // Animations occur only once
-            offset: 100    // Trigger animations 100px before element is in view
+            duration: 800,
+            once: true,
+            offset: 100
         });
     </script>
 </body>
