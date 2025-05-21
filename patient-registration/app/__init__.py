@@ -1,6 +1,3 @@
-from dotenv import load_dotenv
-load_dotenv()
-
 from flask import Flask, render_template, jsonify
 from flask_mail import Mail
 from flask_cors import CORS
@@ -8,6 +5,9 @@ from flask_migrate import Migrate
 import structlog
 import os
 from sqlalchemy import text
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from app.config import ProductionConfig
 from app.error_handlers import register_error_handlers
@@ -19,13 +19,22 @@ migrate = Migrate()
 def create_app(config_class=ProductionConfig):
     app = Flask(
         __name__,
-        static_folder="static",
-        static_url_path="",
-        template_folder="templates"
+        static_folder="static",        # Static files are in app/static/
+        static_url_path="/static",     # Serve them at /static
+        template_folder="templates"    # Templates are in app/templates/
     )
 
     app.config.from_object(config_class)
     config_class.init_app(app)
+
+    # Email configuration
+    app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
+    app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
+    app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
+    app.config['MAIL_USE_SSL'] = os.getenv('MAIL_USE_SSL') == 'True'
+    app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+    app.config['ADMIN_EMAIL'] = os.getenv('ADMIN_EMAIL')
 
     structlog.configure(
         processors=[
@@ -60,10 +69,7 @@ def create_app(config_class=ProductionConfig):
     def health():
         try:
             db.session.execute(text("SELECT 1"))
-            return jsonify({
-                "status": "healthy",
-                "database": "connected"
-            }), 200
+            return jsonify({"status": "healthy", "database": "connected"}), 200
         except Exception as e:
             app.logger.error("Health check failed", error=str(e))
             return jsonify({"status": "unhealthy", "error": str(e)}), 500
