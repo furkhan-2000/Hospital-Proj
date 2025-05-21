@@ -75,6 +75,10 @@ def create_app(config_class=ProductionConfig):
             return app.send_static_file('404.html'), 404
         return render_template('index.html')
 
+    @app.route('/patient-register')
+    def patient_register():
+        return render_template('index.html')
+
     register_error_handlers(app)
 
     try:
