@@ -4,21 +4,28 @@ metadata:
   name: nginx-ingress
   namespace: prod
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: /patient-register/static/(.*)
+      - path: /patient-register(/|$)(.*)
         pathType: Prefix
         backend:
           service:
             name: patsvc1
             port:
               number: 5003
-      - path: /patient-register/static
+      - path: /css/(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: patsvc1
+            port:
+              number: 5003
+      - path: /js/(.*)
         pathType: Prefix
         backend:
           service:
