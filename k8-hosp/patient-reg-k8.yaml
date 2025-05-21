@@ -21,7 +21,6 @@ data:
   MAIL_USERNAME: "bWVoZGlmdXJraGFuMDAzQGdtYWlsLmNvbQ=="
   MAIL_PASSWORD: "b3JwZiBvcWVxIGZ4emggYWt3cw=="
 ---
-# PriorityClass for Patient Registration
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
@@ -30,7 +29,6 @@ value: 100000
 globalDefault: false
 description: "Priority class for Patient Registration"
 ---
-# Deployment for the patient registration application
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -90,21 +88,6 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 10
 ---
-# Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: patsvc1
-  namespace: prod
-spec:
-  selector:
-    tier: patreg
-  ports:
-    - port: 5003
-      targetPort: 5003
-      protocol: TCP
----
-# Network policy
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -131,7 +114,21 @@ spec:
         - protocol: TCP
           port: 465
 ---
-# HorizontalPodAutoscaler
+apiVersion: v1
+kind: Service
+metadata:
+  name: patsvc1
+  namespace: prod
+spec:
+  type: NodePort
+  selector:
+    tier: patreg
+  ports:
+    - port: 5003
+      targetPort: 5003
+      protocol: TCP
+      nodePort: 5003
+---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
