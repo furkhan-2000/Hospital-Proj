@@ -36,6 +36,7 @@ COPY --chown=appuser:appuser requirements.txt ./
 RUN pip install --user --no-cache-dir -r requirements.txt
 
 COPY --chown=appuser:appuser . .
+COPY --chown=appuser:appuser ./app/static /app/static
 
 EXPOSE 5003
 
@@ -43,6 +44,5 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:5003/health || exit 1
 
 VOLUME /app/data /app/logs /app/uploads
-
 
 CMD ["flask", "run", "--host=0.0.0.0", "--port=5003"]
