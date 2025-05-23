@@ -1,14 +1,4 @@
 services:
-  patient-registration:
-    build:
-      context: ./patient-registration
-      dockerfile: Dockerfile
-    env_file:
-      - ./patient-registration/.env
-    ports:
-      - "5003:5003"
-    restart: unless-stopped
-
   blood-report-check:
     build:
       context: ./blood-report-check
