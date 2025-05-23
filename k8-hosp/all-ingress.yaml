@@ -1,14 +1,27 @@
-# ingress for routinh : 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: blood-api-ingress
+  name: urine-ingress
   namespace: prod
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
+      - path: /diagnostics/upload
+        pathType: Exact
+        backend:
+          service:
+            name: urinesvc
+            port:
+              number: 5001
+      - path: /
+        pathType: Exact
+        backend:
+          service:
+            name: bloodsvc
+            port:
+              number: 5002
       - path: /api/analyze
         pathType: Prefix
         backend:
@@ -20,7 +33,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: blood-ui-ingress
+  name: blood-ingress
   namespace: prod
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
