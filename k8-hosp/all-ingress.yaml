@@ -1,38 +1,44 @@
+# ingress for routinh : 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx-ingress
+  name: blood-api-ingress
   namespace: prod
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: /patient-register
-        pathType: Prefix
-        backend:
-          service:
-            name: patsvc1
-            port:
-              number: 5003
-      - path: /static
-        pathType: Prefix
-        backend:
-          service:
-            name: patsvc1
-            port:
-              number: 5003
-      - path: /blood-report-check
+      - path: /api/analyze
         pathType: Prefix
         backend:
           service:
             name: bloodsvc
             port:
               number: 5002
-      - path: /urine-report-check
-        pathType: Prefix
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blood-ui-ingress
+  namespace: prod
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /blood-report-check(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bloodsvc
+            port:
+              number: 5002
+      - path: /urine-report-check(/|$)(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: urinesvc
