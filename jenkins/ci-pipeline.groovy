@@ -104,7 +104,7 @@ pipeline {
         failure {
             mail to: "furkhan2000@icloud.com", 
                  subject: "Pipeline Failed", 
-                 body: "Hospital-CI Pipeline build number ${env.BUILD_NUMBER} failed. Please review the console output."
+                 body: "Hospital-CI Pipeline build number ${env.BUILD_NUMBER} failed. Please review the console output. ${env.BUILD_URL}"
             echo "mail send successfully for CI pipeline"
         }
     }
