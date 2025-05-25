@@ -95,7 +95,7 @@ pipeline {
     }
     post {
         success {
-            build job: "CD-job",
+            build job: "Hospital-CD",
                   parameters: [string(name: 'IMAGE_TAG', value: "${env.IMAGE_TAG}")],
                   wait: false,
                   propagate: false
