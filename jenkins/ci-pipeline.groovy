@@ -7,12 +7,13 @@ pipeline {
         stage('cleaning') {
             steps {
                 cleanWs()
-                echo "workspace Clean"
+                echo "workspace Cleaned"
             }
         }
         stage('cloning') {
             steps {
                 git url: 'https://github.com/furkhan-2000/Hospital-Proj', branch: 'main'
+                echo "repo Cloned"
             }
         }
         stage('Dynamic Tagging') {
@@ -31,6 +32,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonar') {
                     sh "${SONAR_HOME}/bin/sonar-scanner -Dsonar.projectName=Hospital-Proj -Dsonar.projectKey=Hospital-Proj"
+                    echo "SAST performed"
                 }
             }
         }
@@ -61,8 +63,9 @@ pipeline {
                         )
                     }
                     dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+                    echo "dependency-check completed (owasp)"
                 }
-            }
+            }  
         }
         stage('trivy') {
             steps {
@@ -86,9 +89,12 @@ pipeline {
                     sh '''
                         docker tag hospital-ci-urine-report-check:latest ${DOCKERHUB_USERNAME}/shark:urine-${IMAGE_TAG}
                         docker tag hospital-ci-blood-report-check:latest ${DOCKERHUB_USERNAME}/shark:blood-${IMAGE_TAG}
+                        echo "Images tagged successfully"
                         docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}
+                        echo "loggined to docker-hub"
                         docker push ${DOCKERHUB_USERNAME}/shark:urine-${IMAGE_TAG}
                         docker push ${DOCKERHUB_USERNAME}/shark:blood-${IMAGE_TAG}
+                        echo "images pushed successfully to docker hub"
                     '''
                 }
             }
