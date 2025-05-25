@@ -7,7 +7,7 @@ pipeline {
         stage('cleaning') {
             steps {
                 cleanWs()
-                echo "workspace Cleaned"
+                echo "workspace Clean"
             }
         }
         stage('cloning') {
