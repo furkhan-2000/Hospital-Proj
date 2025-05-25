@@ -76,7 +76,7 @@ pipeline {
         stage('building') {
             steps {
                 sh "docker compose down && docker image prune -a -f && docker system prune --all -f && docker compose up -d"
-                echo "Deprecated images are removed and new images are  build😊container started"
+                echo "Deprecated images are removed and new images are build😊container started"
             }
         }
         stage('authenticating && Pushing') {
