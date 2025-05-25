@@ -66,11 +66,13 @@ pipeline {
         stage('trivy') {
             steps {
                 sh "trivy fs ./ --cache-dir ./trivyresult"
+                echo "scanning done successfully "
             }
         }
         stage('building') {
             steps {
                 sh "docker compose down && docker compose up -d"
+                echo "Images build & container started"
             }
         }
         stage('authenticating && Pushing') {
@@ -97,11 +99,13 @@ pipeline {
                   parameters: [string(name: 'IMAGE_TAG', value: "${env.IMAGE_TAG}")],
                   wait: false,
                   propagate: false
+            echo "CD-Job started successfully for CI pipeline"
         }
         failure {
             mail to: "furkhan2000@icloud.com", 
                  subject: "Pipeline Failed", 
                  body: "Hospital-CI Pipeline build number ${env.BUILD_NUMBER} failed. Please review the console output."
+            echo "mail send successfully for CI pipeline"
         }
     }
 }
