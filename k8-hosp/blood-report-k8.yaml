@@ -40,7 +40,7 @@ spec:
         fsGroup: 2000
       containers:
         - name: bloodcon
-          image: furkhan2000/shark:c09aa73
+          image: furkhan2000/shark:7037ee8
           ports:
             - containerPort: 5002
           volumeMounts:
