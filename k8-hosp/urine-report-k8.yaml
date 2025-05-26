@@ -82,26 +82,6 @@ spec:
       protocol: TCP
       targetPort: 5001
 ---
-# NetworkPolicy for urine report
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: urinenp
-  namespace: prod
-spec:
-  podSelector:
-    matchLabels:
-      tier: urineapp
-  policyTypes:
-    - Ingress
-    - Egress
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              tier: patreg
-  egress: []
----
 # HorizontalPodAutoscaler for urine report
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
