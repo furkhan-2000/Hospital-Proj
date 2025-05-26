@@ -82,26 +82,6 @@ spec:
       protocol: TCP
       targetPort: 5002
 ---
-# NetworkPolicy for blood report
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: bloodnp
-  namespace: prod
-spec:
-  podSelector:
-    matchLabels:
-      tier: bloodapp
-  policyTypes:
-    - Ingress
-    - Egress
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              tier: patreg
-  egress: []
----
 # HorizontalPodAutoscaler for blood report
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
