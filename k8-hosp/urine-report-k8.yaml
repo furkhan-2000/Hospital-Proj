@@ -40,7 +40,7 @@ spec:
         fsGroup: 2000
       containers:
         - name: urinecon
-          image: furkhan2000/shark:urine-f96823a
+          image: furkhan2000/shark:urine-c15b4ee
           ports:
             - containerPort: 5001
           volumeMounts:
