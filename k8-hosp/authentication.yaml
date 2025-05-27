@@ -9,7 +9,7 @@ kind: ClusterRole
 metadata: 
   name: jenkins-role
 rules: 
-  apiGroups: ["", "apps", "rbac.authorization.k8s.io", "scheduling.k8s.io", "autoscaling"]
+- apiGroups: ["", "apps", "rbac.authorization.k8s.io", "scheduling.k8s.io", "autoscaling"]
   resources: ["deployments", "replicasets", "configmaps", "services", "persistentvolumeclaims", "persistentvolumes", "priorityclasses", "horizontalpodautoscalers"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
